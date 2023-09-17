@@ -1,4 +1,4 @@
-# VYPERIUM
+# ZEIT PROTOCOL
 
 
 ![Base and Zeit](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/9db3f938-fee8-4d6e-b397-be57f79cdcdf)
