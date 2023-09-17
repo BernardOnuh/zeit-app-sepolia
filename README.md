@@ -106,10 +106,11 @@ To start the development server:
 * Explore new opportunities for growth and expansion
 
 ## Team Members
-* _Isaac_ (Project Manager/Team Lead)
+* _Zikk_ (Project Manager/Team Lead)
+*  _Sanera_ (Project Manager)
 * _Johnex_ (Front End Developer)
 * _Benard_ (Backend Developer/BlockChain Dev)
-* _Designer_ (UI/UX Designer)
+* _Vmorgan_ (UI/UX Designer)
 
 ## Contributing
 If you'd like to contribute to Vyperium, please follow these guidelines:
