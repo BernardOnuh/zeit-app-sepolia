@@ -1,6 +1,6 @@
 # ZEIT PROTOCOL
 
-
+https://zeitprotocol.xyz/
 ![Base and Zeit](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/9db3f938-fee8-4d6e-b397-be57f79cdcdf)
 
 ## OVERVIEW
@@ -39,10 +39,7 @@ The Settings page empowers users to customize and personalize their VYPERIUM app
 
 https://www.figma.com/file/U13MaTFy1wJqkfzHSRyIru/VENOM?type=design&t=0Ut3C33SLAanrOta-0
 
-
-<img width="1198" alt="Screenshot 2023-06-09 at 00 51 28" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/6a531583-6264-4dee-812d-b4c87a883c8d">
-
-This is a screenshot of the figma file as designed by our Uidesigner
+https://zeitprotocol.xyz/
 
 ## Table of Contents
 * [Installation](#installation)
