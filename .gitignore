@@ -8,6 +8,17 @@
 # testing
 /coverage
 
+# charting lib
+public/static/charting_library/
+public/static/datafeeds/
+build/
+
+# prettier
+.prettierignore
+.prettierrc
+yarn.lock
+.idea
+
 # next.js
 /.next/
 /out/

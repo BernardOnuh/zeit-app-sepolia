@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const TVChartContainer = dynamic(
+	() =>
+		import('@/components/TVChartContainer').then(mod => mod.TVChartContainer),
+	{ ssr: false },
+);
 
 const Trade = () => {
-  return (
-    <div>
-      trade
-    </div>
-  )
-}
+	return (<TVChartContainer />);
+};
 
-export default Trade
+export default Trade;
