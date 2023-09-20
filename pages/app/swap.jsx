@@ -8,7 +8,7 @@ const Swap = () => {
   return (
     <>
       <HeadComp title="Zeit | Swap" />
-      <main className={`${mode ? "bg-white" : "bg-[#1E1E1E]"} pt-[96px] transition-[.4s]`}>
+      <main className={`${mode ? "bg-white" : "bg-[#1E1E1E]"} pt-[96px] pb-[179px] transition-[.4s]`}>
         <section className="max-w-[584px] mx-auto bg-white rounded-[16px] w-[35%] p-[16px]">
           <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">Swap</h1>
           <p className="font-Inter text-[16px] text-[#364152] mb-[16px] font-[400]">Instantly Trade Tokens</p>
