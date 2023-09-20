@@ -7,8 +7,20 @@
 /* * {
     outline: 1px solid red;
 } */
+/* generic styles */
 :root {
     --toastify-icon-color-success: #8D99FF !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 .text-outline {
     background: linear-gradient(90deg, #3772FF 0%, #EC6DC4 100%);
@@ -16,6 +28,10 @@
     background-clip: text;
     -webkit-text-stroke: 4px transparent;
     opacity: 0.3;
+}
+.activeLink {
+    color: #364152 !important;
+    font-weight: 700;
 }
 .funny-div {
     border-radius: 239.537px;
