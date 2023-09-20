@@ -21,13 +21,13 @@ const Invite = () => {
           </div>
           <div className="flex w-fit mx-auto gap-[21px]">
             <button className="">
-              <Image width={20} height={1} src="/images/Twitter-Negative.svg" className="" alt="star_svg" />
+              <Image width={20} height={1} src="/images/Twitter-Negative.svg" className="" alt="twitter_svg" />
             </button>
             <button className="">
-              <Image width={20} height={1} src="/images/Discord-Negative.svg" className="" alt="star_svg" />
+              <Image width={20} height={1} src="/images/Discord-Negative.svg" className="" alt="discord_svg" />
             </button>
             <button className="">
-              <Image width={20} height={1} src="/images/Twitch-Negative.svg" className="" alt="star_svg" />
+              <Image width={20} height={1} src="/images/Twitch-Negative.svg" className="" alt="twitch_svg" />
             </button>
           </div>
         </section>
