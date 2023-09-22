@@ -66,6 +66,15 @@ input[type=number] {
         transform: rotate(360deg);
     }
 }
+.sw-bxshdw {
+    box-shadow: 11px 8px 21px 11px rgba(91, 192, 190, 0.06), 0px 0px 11px 0px rgba(0, 0, 0, 0.04), 0px 4px 42px 0px rgba(0, 0, 0, 0.03);
+}
+.bg-sw {
+    background: url(/images/Gradient.png) !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 /* Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light  */
 .Toastify__progress-bar--success {
     background-color: #8D99FF !important;
@@ -125,7 +134,7 @@ input[type=number] {
     line-height: 30px !important;
 }
 .default-btn {
-    background-color: #3772FF !important;
+    background-color: #5BC0BE !important;
     transition: all .1s !important;
     color: white !important;
     cursor: pointer !important;
@@ -264,7 +273,7 @@ input[type=number] {
 }
 .text-input {
     color: #a3a3a3;
-    border: 1px solid #9AA4B2;
+    border: 1px solid #E0E0E0;
     outline: none;
     font-family: "Inter";
     font-size: 14px;
