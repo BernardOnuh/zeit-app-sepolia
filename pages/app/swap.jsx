@@ -5,9 +5,12 @@ import { useData } from "@/context/DataContext"
 
 const Swap = () => {
   const {mode} = useData()
-  const [popUp, setModal] = useState(true)
+  const [popUp, setModal] = useState(false)
   const removeModal = () => {
-    setModal(!popUp)
+    setModal(false)
+  }
+  const togglePopUp = (val) => {
+    setModal(true)
   }
   return (
     <>
@@ -20,7 +23,7 @@ const Swap = () => {
           <div className="h-[24px] mb-[16px] w-full">
             <span className="h-full flex gap-[16px] float-right">
               <button className="">
-                <Image width={23} height={1} src="/images/fi_bar-chart.svg" alt="settings" />
+                <Image width={23} height={1} src="/images/fi_bar-chart.svg" alt="chart" />
               </button>
               {/* <button className="">
                 <Image width={23} height={1} src="/images/fi_settings.svg" alt="settings" />
@@ -29,13 +32,13 @@ const Swap = () => {
           </div>
           <div className="p-[8px] border border-[#E3E8EF] rounded-[16px]">
             <div className="h-[40px]">
-              <div className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]">
-                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <button onClick={() => togglePopUp("from")} className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]">
+                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
                 USDC
-                <button className="ml-[8px]">
+                <span className="ml-[8px]">
                   <Image width={20} height={1} src="/images/fi_chevron.svg" className=" " alt="chevron" />
-                </button>
-              </div>
+                </span>
+              </button>
             </div>
             <div className="my-[8px] bg-[#F8FAFC] rounded-[8px] p-[8px] flex justify-between items-center">
               <button className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">MAX</button>
@@ -61,13 +64,13 @@ const Swap = () => {
           </div>
           <div className="p-[8px] border border-[#E3E8EF] rounded-[16px]">
             <div className="h-[40px]">
-              <div className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]">
-                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <button onClick={() => togglePopUp("to")} className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]">
+                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
                 USDC
-                <button className="ml-[8px]">
+                <span className="ml-[8px]">
                   <Image width={20} height={1} src="/images/fi_chevron.svg" className=" " alt="chevron" />
-                </button>
-              </div>
+                </span>
+              </button>
             </div>
             <div className="my-[8px] bg-[#EEF2F6] rounded-[8px] p-[8px] flex justify-between items-center">
               <button className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">MAX</button>
@@ -87,7 +90,7 @@ const Swap = () => {
         </section>
       </main>
       <section className={`fixed ${!popUp && "scale-0"} ${mode ? "bg-[#00000029]" : "backdrop-blur-[9px] bg-[#00000075]"} transition-[.5s] z-[1] w-full top-0 bottom-0 bg-[#00000029]`}>
-        <div className={`fixed p-[16px] w-[94%] left-[3%] md:w-[25%] md:left-[37.5%] rounded-[16px] ${mode ? "hero" : "bg-[#1E1E1E]"} h-fit top-[10vh]`}>
+        <div className={`fixed p-[16px] w-[94%] left-[3%] md:w-[25%] md:left-[37.5%] rounded-[16px] ${mode ? "hero" : "bg-[#1E1E1E]"} h-fit top-[15vh]`}>
           <div className="flex mb-[8px] w-full justify-between">
             <p className={` font-Inter ${mode ? "text-[#000]" : "text-white"} text-[24px] font-[600]`}>Select Token</p>
             <button onClick={removeModal}>
@@ -106,20 +109,62 @@ const Swap = () => {
           <h3 className="font-Inter text-[16px] font-[700] mb-[16px]">Hot Tokens</h3>
           <div className="flex gap-[16px] overflow-x-auto mb-[12px] pb-[4px]">
             <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
               BTC
             </button>
             <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
               BTC
             </button>
             <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
               BTC
             </button>
             <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="settings" />
+              <Image width={20} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="token" />
               BTC
+            </button>
+          </div>
+          <h3 className="font-Inter text-[16px] font-[700]">Token List</h3>
+          <div className="overflow-y-auto max-h-[30vh]">
+            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+              <div className="flex items-center gap-[21px]">
+                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="coins" />
+                <div className="">
+                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">ETH</p>
+                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">Ethereum</p>
+                </div>
+              </div>
+              <div className="">
+                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">2,322.05</p>
+                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">2.58</p>
+              </div>
+            </button>
+            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+              <div className="flex items-center gap-[21px]">
+                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="coins" />
+                <div className="">
+                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">ETH</p>
+                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">Ethereum</p>
+                </div>
+              </div>
+              <div className="">
+                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">2,322.05</p>
+                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">2.58</p>
+              </div>
+            </button>
+            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+              <div className="flex items-center gap-[21px]">
+                <Image width={23} height={1} src="/images/btc.svg" className=" mr-[4px]" alt="coins" />
+                <div className="">
+                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">ETH</p>
+                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">Ethereum</p>
+                </div>
+              </div>
+              <div className="">
+                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">2,322.05</p>
+                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">2.58</p>
+              </div>
             </button>
           </div>
         </div>
