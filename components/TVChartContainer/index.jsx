@@ -57,20 +57,20 @@ export class TVChartContainer extends React.PureComponent {
 		this.tvWidget = tvWidget;
 
 		tvWidget.onChartReady(() => {
-			tvWidget.headerReady().then(() => {
-				const button = tvWidget.createButton();
-				button.setAttribute('title', 'Click to show a notification popup');
-				button.classList.add('apply-common-tooltip');
-				button.addEventListener('click', () => tvWidget.showNoticeDialog({
-					title: 'Notification',
-					body: 'TradingView Charting Library API works correctly',
-					callback: () => {
-						console.log('Noticed!');
-					},
-				}));
+			// tvWidget.headerReady().then(() => {
+			// 	const button = tvWidget.createButton();
+			// 	button.setAttribute('title', 'Click to show a notification popup');
+			// 	button.classList.add('apply-common-tooltip');
+			// 	button.addEventListener('click', () => tvWidget.showNoticeDialog({
+			// 		title: 'Notification',
+			// 		body: 'TradingView Charting Library API works correctly',
+			// 		callback: () => {
+			// 			console.log('Noticed!');
+			// 		},
+			// 	}));
 
-				button.innerHTML = 'Check API';
-			});
+			// 	button.innerHTML = 'Check API';
+			// });
 		});
 	}
 
@@ -85,7 +85,6 @@ export class TVChartContainer extends React.PureComponent {
 		return (	
 			<>
 				<header className={styles.VersionHeader}>
-					<h1>Welcome{version()}</h1>
 				</header>
 				<div ref={this.ref} className={styles.TVChartContainer} />
 			</>
