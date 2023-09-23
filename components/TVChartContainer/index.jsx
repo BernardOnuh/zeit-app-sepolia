@@ -33,7 +33,7 @@ export class TVChartContainer extends React.PureComponent {
 
 	componentDidMount() {
 		const widgetOptions = {
-			theme: 'Dark',
+			theme: 'Light',
 			symbol: this.props.symbol,
 			// BEWARE: no trailing slash is expected in feed URL
 			datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
