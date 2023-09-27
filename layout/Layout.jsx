@@ -6,8 +6,8 @@ import AppLayout from './AppLayout'
 const Layout = ({children}) => {
   return (
     <>
-        {/* <Header /> */}
-        <AppLayout />
+        <Header />
+        {/* <AppLayout /> */}
         {children}
         <Footer />
     </>

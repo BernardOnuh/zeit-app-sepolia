@@ -17,80 +17,28 @@ const Index = () => {
   return (
     <>
       <HeadComp title="Zeit | Home" />
-      <section className={`${mode ? "hero" : "bg-[#1E1E1E]"} transition-[.4s] h-[100vh] md:flex md:items-center`}>
-        <div className="hidden w-[1104px] md:block h-fit mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="w-[20%]">
-              <div className=" wow fadeInDown text-center mb-[4rem]">
-                <h4 className={`${mode ? "text-black" : "text-[#fff]"} text-[24px] transition-[.4s] font-Montserrat font-[900]`}>2,849</h4>
-                <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#F2F2F2]"} text-[14px] transition-[.4s]`}>Transactions</p>
-              </div>
-              <div className="wow fadeInDown text-center">
-                <h4 className={`${mode ? "text-black" : "text-[#fff]"} text-[24px] transition-[.4s] font-Montserrat font-[900]`}>$30m</h4>
-                <p className={`${mode ? "text-[#4B4B4B]" : "text-[#f2f2f2]"} transition-[.4s] text-[14px] font-Montserrat`}>Market Cap</p>
-              </div>
-            </div>
-            <div className=" h-[65vh] relative w-[50%]">
-              <div className="flex items-center justify-center h-full">
-                <Image src={`/images/${mode ? "bg-logo.svg" : "logo-dark.svg"}`} className="img-anim " alt="amination" height={1} width={500} />
-              </div>
-              <div className="absolute w-full text-center flex flex-col justify-center h-[60%] top-[20%]">
-                <h1 className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] mb-[1rem] wow fadeInDown font-Comfortaa text-[5rem] font-[700]`}><span className="text-[#3772FF]">Z</span>eit</h1>
-                <p className={`${mode ? "text-[#5C5C5C]" : "text-[#fff]"} transition-[.4s] font-Montserrat wow fadeInUp text-[1.7rem]`}>
-                  Decentralized Perpetual Protocol <br />
-                  Built on Base
-                </p>
+      <section className={`${mode ? "hero" : "bg-[#1E1E1E]"} py-[180px] transition-[.4s]`}>
+        <div className="gap-1 items-center flex mx-auto w-fit">
+          <Image src={`/images/Zeit-Logo.svg`} height={1} width={30} alt='logo' />
+          <h5 className=" font-Inter text-[27px] wow fadeIn font-[600] text-[#828282]">Zeit protocol</h5>
+        </div>
+        <div className="w-fit mx-auto relative">
+          <h1 className="hero-txt relative z-[2] text-center mb-[53px] font-Montserrat text-[100px] wow fadeInDown font-[800] leading-[115.4%]">
+            Dawn of a new <br />
+            trading era
+          </h1>
+          <div className="absolute top-[50%] flex z-[1] w-[100%] scale-[120%]">
+            <div className=" wow fadeInDown left-[-179px]">
+              <div className="relative">
+                <Image src={`/images/hero-img-two.png`} className=""  height={1} width={450} alt='logo' />
+                <Image src={`/images/Ellipse-hero.svg`} className="absolute bottom-[13%] z-[-1] left-[70%]"  height={1} width={20} alt='logo' />
               </div>
             </div>
-            <div className="w-[20%]">
-              <div className="wow fadeInDown text-center mb-[4rem]">
-                <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} text-[24px] transition-[.4s] font-Montserrat font-[900]`}>$20.6m</h4>
-                <p className={`${mode ? "text-[#4B4B4B]" : "text-[#f2f2f2]"} transition-[.4s] text-[14px] font-Montserrat `}>Trading Volume</p>
-              </div>
-              <div className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] wow fadeInDown text-center`}>
-                <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} text-[24px] transition-[.4s] font-Montserrat font-[900]`}>20%</h4>
-                <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#f2f2f2]"} text-[14px] transition-[.4s]`}>APR</p>
-              </div>
-            </div>
+            <Image src={`/images/hero-img-one.png`} className="wow fadeInDown"  height={1} width={500} alt='logo' />
           </div>
         </div>
-        <div className="w-[95%] overflow-hidden pt-[4rem] md:hidden h-fit mx-auto">
-          <div className="flex flex-col items-center justify-between">
-            <div className=" h-[65vh] relative md:w-[50%]">
-              <div className="flex items-center justify-center h-full">
-                <Image src={`/images/${mode ? "bg-logo.svg" : "logo-dark.svg"}`} className="img-anim " alt="amination" height={1} width={500} />
-              </div>
-              <div className="absolute w-full text-center h-[60%] top-[30%]">
-                <h1 className={`mb-[1rem] wow fadeInDown text-[64px] ${mode? "text-black" : "text-white"}  font-Comfortaa font-[700]`}><span className="text-[#3772FF] font-[700]">Z</span>eit</h1>
-                <p className={`${mode ? "text-[#5C5C5C]" : "text-[#FCFCFD]"} font-Montserrat wow fadeInUp  text-[18px] w-[243px] mx-auto font-[400]`}>
-                  Decentralized Perpetual Protocol <br />
-                  Built on Base
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-between w-full">
-              <div className="w-[50%]">
-                <div className="wow fadeInDown text-center mb-[4rem]">
-                  <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] font-Montserrat font-[600]`}>2,849</h4>
-                  <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#9AA4B2]"} transition-[.4s]`}>Transactions</p>
-                </div>
-                <div className="wow fadeInDown text-center">
-                  <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] font-Montserrat font-[600]`}>$30m</h4>
-                  <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#9AA4B2]"} transition-[.4s]`}>Market Cap</p>
-                </div>
-              </div>
-              <div className="w-[50%]">
-                <div className="wow fadeInDown text-center mb-[4rem]">
-                  <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] font-Montserrat font-[600]`}>$20.6m</h4>
-                  <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#9AA4B2]"} transition-[.4s]`}>Trading Volume</p>
-                </div>
-                <div className="wow fadeInDown text-center">
-                  <h4 className={`${mode ? "text-[#000]" : "text-[#fff]"} transition-[.4s] font-Montserrat font-[600]`}>20%</h4>
-                  <p className={` font-Montserrat ${mode ? "text-[#4B4B4B]" : "text-[#9AA4B2]"} transition-[.4s]`}>APR</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="w-fit relative wow fadeIn z-[1] mx-auto">
+          <button onClick={handleModal} className="button-index large-btn">Join Waitlist</button>
         </div>
       </section>
       <section className={` relative z-[-2] ${mode ? "bg-white" : "bg-[#1E1E1E]"}`}>
@@ -106,17 +54,17 @@ const Index = () => {
                 <Image src={`/images/${mode ? "swap-white" : "swap-black"}.svg`} className='p-[5px]'  height={1} width={50} alt='logo' />
               </div>
               <h4 className={`${mode ? "text-[#364152]" : "text-[#EEEEEE]"} transition-[.4s] wow fadeInDown font-Inter font-[500] text-[22px]`}>Swap Assets</h4>
-              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUo md:w-full mx-auto text-center font-Inter`}>Enter Hedged Positions with up to 50x leverage.</p>
+              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUo md:w-full mx-auto text-center font-Inter`}>Swap between token pairs right in one place.</p>
             </div>
             <div className={`text-center md:mx-auto bx-home rounded-[16px] ${mode ?  "bg-white" : "bg-[#1E1E1E] border border-[#202939]" } md:w-[294px] p-[16px] space-y-2`}>
               <Image src={`/images/${mode ? "stake-white" : "stake-black"}.svg`} className={`w-fit rounded-[50%] p-[12.3px] wow fadeInDown bx-i mx-auto`} height={1} width={10} alt='logo' />
               <h4 className={`${mode ? "text-[#364152]" : "text-[#EEEEEE]"} transition-[.4s] font-Inter wow fadeInDown font-[500] text-[22px]`}>Stake $ZET</h4>
-              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUp md:w-full mx-auto text-center font-Inter`}>Enter Hedged Positions with up to 50x leverage.</p>
+              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUp md:w-full mx-auto text-center font-Inter`}>Stake ZEI token and ZED stable token to earn juicy APY</p>
             </div>
             <div className={`text-center md:mx-auto bx-home rounded-[16px] ${mode ?  "bg-white" : "bg-[#1E1E1E] border border-[#202939]" } md:w-[294px] p-[16px] space-y-2`}>
               <Image src={`/images/${mode ? "revenue-white" : "revenue-black"}.svg`} className={`w-fit rounded-[50%] p-[12.3px] wow fadeInDown bx-i mx-auto`} height={1} width={10} alt='logo' />
               <h4 className={`${mode ? "text-[#364152]" : "text-[#EEEEEE]"} transition-[.4s] wow fadeInDown font-Inter font-[500] text-[22px]`}>Revenue Share</h4>
-              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUp md:w-full mx-auto text-center font-Inter`}>Enter Hedged Positions with up to 50x leverage.</p>
+              <p className={`${mode ? "text-[#5C5C5C]" : "text-[#BCBCBC]"} text-[18px] transition-[.4s] wow fadeInUp md:w-full mx-auto text-center font-Inter`}>Invite Traders and Earn a percentage of their fees.</p>
             </div>
           </div>
           <div className={`absolute text-[144px] font-[900] font-Inter w-[80%] left-[10%] hidden md:block ${mode ? "text-[#EEF2F6]" : "text-[#2C2C2C]"} text-center z-[-1] translate-y-[6%]`}>Coming soon</div>
@@ -148,7 +96,7 @@ const Index = () => {
       </section>
       <section className={`${mode ? "bg-white" : "bg-[#1E1E1E]"} relative transition-[.4s] pt-[8rem]`}>
         <div className="flex justify-center items-center w-[50%] md:w-full mx-auto">
-          <Image src="/images/ellipse.svg" className="w-fit wow fadeIn mx-auto" height={1} width={850} alt="logo" />
+          <Image src="/images/Zeit-Logo.svg" className="w-fit wow fadeIn mx-auto" height={1} width={8500} alt="logo" />
         </div>
         <p className={`${mode ? "text-black" : "text-white"} transition-[.4s] font-Comfortaa font-[600] md:w-[60%] text-[20px] w-[80%] mx-auto text-center wow fadeIn mt-[85px]`}>Zeit Protocol is built on Base and is powered by Optimism's OP Stack, making it one of the most secure, scalable EVM L2s out there. The OP Stack is an open-source public good that will serve as the foundation for a “superchain” of L2s that share interoperability, sequencing, and governance.</p>
         <div className="">

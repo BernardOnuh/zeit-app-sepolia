@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter&family=Montserrat&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter:wght@700&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,7 +15,12 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
+.hero-txt {
+    background: linear-gradient(178deg, #465478 -8.29%, #687BAB 55.19%, rgba(234, 234, 234, 0.00) 98.38%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
@@ -89,7 +93,8 @@ input[type=number] {
     box-shadow: 3.896698236465454px 2.3380191326141357px 13.248774528503418px 0px rgba(0, 0, 0, 0.05), 8.572735786437988px 6.23471736907959px 12.46943473815918px 0px rgba(80, 132, 255, 0.10);
 }
 .bg-grad {
-    background: linear-gradient(270deg, rgba(236, 109, 196, 0.10) 0%, rgba(55, 114, 255, 0.10) 100%);
+    opacity: 0.2;
+    background: var(--gradient-01, linear-gradient(90deg, #5BC0BE -3.72%, #79A1FF 134.17%));
     filter: blur(40.5px);
 }
 /* basic styles */
@@ -132,6 +137,7 @@ input[type=number] {
     font-style: normal !important;
     font-weight: 600 !important;
     line-height: 30px !important;
+    border-radius: 8px !important;
 }
 .default-btn {
     background-color: #5BC0BE !important;
@@ -256,17 +262,16 @@ input[type=number] {
 }
 .button-index {
     border-radius: 8px !important;
-    background: linear-gradient(90deg, #2162FF 0%, #F6BCE4 100%) !important;
+    background: linear-gradient(90deg, #5BC0BE -3.72%, #79A1FF 134.17%);
     color: #FFFFFF !important;
     transition: .1s !important;
 }
 .button-index:hover {
     /* border: 3px solid red !important; */
-    box-shadow: 0px 0px 3px 2px #2164ff5b !important;
+    box-shadow: 0px 0px 3px 2px #2162FF45 !important;
 }
 .button-index:focus {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.06) 100%), 
-                linear-gradient(90deg, #2162FF 0%, #F6BCE4 100%) !important;
+    box-shadow: 0px 0px 9px 2px #2162FF45 !important;
 }
 .button-index:disabled {
     cursor: not-allowed;

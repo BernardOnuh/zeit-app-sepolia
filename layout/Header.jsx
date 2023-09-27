@@ -332,15 +332,15 @@ const Header = () => {
       <header className={`fixed ${popUp && "hidden"} flex items-center justify-between bg-transparent backdrop-blur-sm w-full py-3 z-[3] px-[1rem] md:px-[2rem]`}>
           <div className="">
             <Link href="/">
-              <Image src="/images/Logo.svg" alt="logo" height={50} width={50}/>
+              <Image src="/images/Zeit-Logo.svg" alt="logo" height={50} width={50}/>
             </Link>
           </div>
           <div className="">
         <button onClick={handleModal} className="button-index medium-btn">Join Waitlist</button>
       </div>
       </header>
-      <section className={`fixed ${!popUp && "scale-0"} ${mode ? "bg-[#00000029]" : "backdrop-blur-[9px] bg-[#00000075]"} transition-[.5s] z-[1] w-full top-0 bottom-0 bg-[#00000029]`}>
-        <div className={`fixed md:p-[32px] p-[25px] w-[94%] left-[3%] md:w-[38%] md:left-[31%] rounded-[16px] ${mode ? "hero" : "bg-[#1E1E1E]"} h-fit top-[10vh] z-[1]`}>
+      <section className={`fixed ${!popUp && "scale-0"} ${mode ? "bg-[#00000029]" : "backdrop-blur-[9px] bg-[#00000075]"} transition-[.5s] z-[5] w-full top-0 bottom-0 bg-[#00000029]`}>
+        <div className={`fixed md:p-[32px] p-[25px] w-[94%] left-[3%] md:w-[38%] md:left-[31%] rounded-[16px] ${mode ? "hero" : "bg-[#1E1E1E]"} h-fit top-[10vh] z-[5]`}>
           <div className="flex w-full justify-between">
             <p className={` font-Inter ${mode ? "text-[#202939]" : "text-white"} text-[20px] font-[600]`}>{headerText}</p>
             <button onClick={removeModal}>
