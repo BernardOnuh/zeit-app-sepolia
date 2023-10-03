@@ -5,7 +5,7 @@ import { useData } from "@/context/DataContext";
 import Button from "../component/Button";
 import dynamic from "next/dynamic";
 
-import { connectWallet } from "./utils/connectWallet";
+import { connectWallet } from "../../utils/connectWallet";
 
 const TVChartContainer = dynamic(
   () =>
