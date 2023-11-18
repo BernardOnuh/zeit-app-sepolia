@@ -1,6 +1,9 @@
 import { ethers } from "ethers";
+import { useData } from "@/context/DataContext";
+
 
 export const connectWallet = async function (set) {
+  const {setIsConnected} = useData()
   try {
     if (!window.ethereum) return console.log("No wallet installed");
     const provider = new ethers.providers.Web3Provider(window.ethereum);

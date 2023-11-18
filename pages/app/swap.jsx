@@ -14,12 +14,11 @@ const TVChartContainer = dynamic(
 );
 
 const Swap = () => {
-  const { mode } = useData();
+  const { mode, isConnected, setIsConnected } = useData();
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
   // state to track if a user's wallet is connected
-  const [isConnected, setIsConnected] = useState(false);
   const removeModal = () => {
     setModal(false);
   };

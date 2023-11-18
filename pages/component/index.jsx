@@ -38,7 +38,7 @@ const Index = () => {
           </div>
         </div>
         <div className="w-fit relative wow fadeIn z-[1] mx-auto">
-          <button onClick={handleModal} className="button-index large-btn">Join Waitlist</button>
+          <button onClick={handleModal} className="button-index large-btn">Use DApp</button>
         </div>
       </section>
       <section className={` relative z-[-2] ${mode ? "bg-white" : "bg-[#1E1E1E]"}`}>
@@ -96,7 +96,7 @@ const Index = () => {
       </section>
       <section className={`${mode ? "bg-white" : "bg-[#1E1E1E]"} relative transition-[.4s] pt-[8rem]`}>
         <div className="flex justify-center items-center w-[50%] md:w-full mx-auto">
-          <Image src="/images/Zeit-Logo.svg" className="w-fit wow fadeIn mx-auto" height={1} width={8500} alt="logo" />
+          <Image src="/images/Logo-2.svg" className="w-fit wow fadeIn mx-auto" height={1} width={100} alt="logo" />
         </div>
         <p className={`${mode ? "text-black" : "text-white"} transition-[.4s] font-Comfortaa font-[600] md:w-[60%] text-[20px] w-[80%] mx-auto text-center wow fadeIn mt-[85px]`}>Zeit Protocol is built on Base and is powered by Optimism's OP Stack, making it one of the most secure, scalable EVM L2s out there. The OP Stack is an open-source public good that will serve as the foundation for a “superchain” of L2s that share interoperability, sequencing, and governance.</p>
         <div className="">
