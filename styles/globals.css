@@ -297,3 +297,13 @@ input[type=number] {
     background-color: #DDD;
     border: 1px solid #B8B8B8;
 }
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+@layer utilities {
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+}

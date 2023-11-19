@@ -103,7 +103,7 @@ const Swap = () => {
               symbol={symbol}
             />
           </div>
-          <div className="md:max-w-[584px] w-[99%] mx-auto bg-white rounded-[16px] sw-bxshdw md:w-[35%] p-[16px]">
+          <div className="md:max-w-[584px] w-[95%] mx-auto bg-white rounded-[16px] sw-bxshdw md:w-[35%] p-[16px]">
             <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">
               Swap
             </h1>
