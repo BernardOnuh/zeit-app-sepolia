@@ -38,7 +38,9 @@ const Index = () => {
           </div>
         </div>
         <div className="w-fit relative wow fadeIn z-[1] mx-auto">
-          <button onClick={handleModal} className="button-index large-btn">Use DApp</button>
+          <Link href="/app/swap">
+            <button className="button-index large-btn">Use DApp</button>
+          </Link>
         </div>
       </section>
       <section className={` relative z-[-2] ${mode ? "bg-white" : "bg-[#1E1E1E]"}`}>

@@ -3,35 +3,88 @@ import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
 import { useData } from "@/context/DataContext";
 import Button from "../component/Button";
-import dynamic from "next/dynamic";
+import TradingViewWidget from "@/components/TradingViewWidget"
 
 import { connectWallet } from "../../utils/connectWallet";
 
-const TVChartContainer = dynamic(
-  () =>
-    import("@/components/TVChartContainer").then((mod) => mod.TVChartContainer),
-  { ssr: false }
-);
 
 const Swap = () => {
-  const { mode, isConnected, setIsConnected } = useData();
+  const { mode } = useData();
+  const [isConnected, setIsConnected] = useState(false);
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
-  // state to track if a user's wallet is connected
+  const [firstToken, setFirstToken] = useState("BTC");
+  const [secondToken, setSecondToken] = useState("USDT");
+  const [order, setOrder] = useState(null)
+  const [symbol, setSymbol] = useState("BTCUSDT")
   const removeModal = () => {
     setModal(false);
   };
   const togglePopUp = (val) => {
     setModal(true);
+    setOrder(val);
   };
   const handleSwitch = () => {
     setStat(true);
     setTimeout(() => setStat(false), 500);
+    setFirstToken(secondToken)
+    setSecondToken(firstToken)
+    setSymbol(secondToken+firstToken)
   };
   const toggleChart = () => {
     setChartMod(!chartMod);
   };
+  const selectToken = (val) => {
+    if (val == secondToken && order == "from") {
+      setFirstToken(val)
+      setSecondToken(firstToken)
+      setSymbol(val+firstToken)
+      setModal(false)
+      return
+    }
+    else if (val == firstToken && order == "to") {
+      setSecondToken(val)
+      setFirstToken(secondToken)
+      setSymbol(secondToken+val)
+      setModal(false)
+      return
+    }
+    if (order == "from") {
+      setFirstToken(val)
+      setSymbol(val+secondToken)
+    }
+    else {
+      setSecondToken(val)
+      setSymbol(firstToken+val)
+    }
+    setModal(false)
+  }
+  const TokenImg = ({tokenType, classNames}) => {
+    let iconName
+    let iconWidth
+    if (tokenType == "ETH") {
+      iconName = "Ethereum_logo.svg"
+      iconWidth = 12
+    }
+    else if (tokenType == "BTC") {
+      iconName = "btc.svg"
+      iconWidth = 23
+    }
+    else {
+      iconName = "tether-logo.svg"
+      iconWidth = 23
+    }
+    return (
+      <Image
+        width={iconWidth}
+        height={1}
+        src={`/images/${iconName}`}
+        className={classNames}
+        alt="token"
+      />
+    )
+  }
   return (
     <>
       <HeadComp title="Zeit | Swap" />
@@ -46,7 +99,9 @@ const Swap = () => {
               chartMod ? "max-w-[100%] p-[16px]" : "max-w-0 invisible"
             } `}
           >
-            <TVChartContainer />
+            <TradingViewWidget
+              symbol={symbol}
+            />
           </div>
           <div className="max-w-[584px] mx-auto bg-white rounded-[16px] sw-bxshdw w-[35%] p-[16px]">
             <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">
@@ -100,14 +155,8 @@ const Swap = () => {
                   onClick={() => togglePopUp("from")}
                   className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]"
                 >
-                  <Image
-                    width={23}
-                    height={1}
-                    src="/images/btc.svg"
-                    className=" mr-[4px]"
-                    alt="token"
-                  />
-                  USDC
+                  <TokenImg classNames="mr-[4px]" tokenType={firstToken} />
+                  {firstToken}
                   <span className="ml-[8px]">
                     <Image
                       width={20}
@@ -174,14 +223,8 @@ const Swap = () => {
                   onClick={() => togglePopUp("to")}
                   className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]"
                 >
-                  <Image
-                    width={23}
-                    height={1}
-                    src="/images/btc.svg"
-                    className=" mr-[4px]"
-                    alt="token"
-                  />
-                  USDC
+                  <TokenImg classNames="mr-[4px]" tokenType={secondToken} />
+                  {secondToken}
                   <span className="ml-[8px]">
                     <Image
                       width={20}
@@ -268,7 +311,7 @@ const Swap = () => {
               </svg>
             </button>
           </div>
-          <p className="text-[16px] font-Inter font-[400]">
+          {/* <p className="text-[16px] font-Inter font-[400]">
             Search using a Token name or Contract address
           </p>
           <div className="">
@@ -276,90 +319,50 @@ const Swap = () => {
               type="text"
               className="w-full p-[6px] my-[16px] text-[#A3A3A3] font-Inter text-[16px] font-[400] text-input"
             />
-          </div>
+          </div> */}
           <h3 className="font-Inter text-[16px] font-[700] mb-[16px]">
             Hot Tokens
           </h3>
           <div className="flex gap-[16px] overflow-x-auto mb-[12px] pb-[4px]">
-            <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image
-                width={20}
-                height={1}
-                src="/images/btc.svg"
-                className=" mr-[4px]"
-                alt="token"
-              />
+            <button onClick={() => selectToken("BTC")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+              <TokenImg classNames="mr-[4px]" tokenType="BTC" />
               BTC
             </button>
-            <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image
-                width={20}
-                height={1}
-                src="/images/btc.svg"
-                className=" mr-[4px]"
-                alt="token"
-              />
-              BTC
+            <button onClick={() => selectToken("ETH")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+              <TokenImg classNames="mr-[4px]" tokenType="ETH" />
+              ETH
             </button>
-            <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image
-                width={20}
-                height={1}
-                src="/images/btc.svg"
-                className=" mr-[4px]"
-                alt="token"
-              />
-              BTC
-            </button>
-            <button className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
-              <Image
-                width={20}
-                height={1}
-                src="/images/btc.svg"
-                className=" mr-[4px]"
-                alt="token"
-              />
-              BTC
+            <button onClick={() => selectToken("USDT")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+              <TokenImg classNames="mr-[4px]" tokenType="USDT" />
+              USDT
             </button>
           </div>
           <h3 className="font-Inter text-[16px] font-[700]">Token List</h3>
           <div className="overflow-y-auto max-h-[30vh]">
-            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button onClick={() => selectToken("BTC")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
               <div className="flex items-center gap-[21px]">
-                <Image
-                  width={23}
-                  height={1}
-                  src="/images/btc.svg"
-                  className=" mr-[4px]"
-                  alt="coins"
-                />
+                <TokenImg classNames="mr-[4px]" tokenType="BTC" />
                 <div className="">
                   <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
-                    ETH
+                    BTC
                   </p>
                   <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
-                    Ethereum
+                    Bitcoin
                   </p>
                 </div>
               </div>
               <div className="">
-                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
+                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
                   2,322.05
                 </p>
                 <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
                   2.58
-                </p>
+                </p> */}
               </div>
             </button>
-            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button onClick={() => selectToken("ETH")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
               <div className="flex items-center gap-[21px]">
-                <Image
-                  width={23}
-                  height={1}
-                  src="/images/btc.svg"
-                  className=" mr-[4px]"
-                  alt="coins"
-                />
+                <TokenImg classNames="mr-[4px]" tokenType="ETH" />
                 <div className="">
                   <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
                     ETH
@@ -370,39 +373,33 @@ const Swap = () => {
                 </div>
               </div>
               <div className="">
-                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
+                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
                   2,322.05
                 </p>
                 <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
                   2.58
-                </p>
+                </p> */}
               </div>
             </button>
-            <button className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button onClick={() => selectToken("USDT")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
               <div className="flex items-center gap-[21px]">
-                <Image
-                  width={23}
-                  height={1}
-                  src="/images/btc.svg"
-                  className=" mr-[4px]"
-                  alt="coins"
-                />
+                <TokenImg classNames="mr-[4px]" tokenType="USDT" />
                 <div className="">
                   <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
-                    ETH
+                    USDT
                   </p>
                   <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
-                    Ethereum
+                    Tether
                   </p>
                 </div>
               </div>
               <div className="">
-                <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
+                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
                   2,322.05
                 </p>
                 <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
                   2.58
-                </p>
+                </p> */}
               </div>
             </button>
           </div>

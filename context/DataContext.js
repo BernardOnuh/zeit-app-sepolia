@@ -1,5 +1,5 @@
 import {useState, useContext, createContext } from 'react'
-const DataContext=createContext({})
+const DataContext = createContext({})
 const {Provider}= DataContext
 
 const DataGet=({children})=>{
@@ -11,5 +11,5 @@ const DataGet=({children})=>{
         </Provider>
     )
 }
-const useData= ()=>useContext(DataContext)
+const useData = () => useContext(DataContext)
 export {useData,DataGet}
