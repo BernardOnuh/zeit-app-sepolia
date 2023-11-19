@@ -149,6 +149,15 @@ const Swap = () => {
                 </button> */}
               </span>
             </div>
+            <div
+              className={`transition-[.4s] md:hidden rounded-[16px] ${
+                chartMod ? "max-h-[100%]" : "max-h-0 invisible"
+              } `}
+            >
+              <TradingViewWidget
+                symbol={symbol}
+              />
+            </div>
             <div className="p-[8px] border border-[#E3E8EF] rounded-[16px]">
               <div className="h-[40px]">
                 <button
