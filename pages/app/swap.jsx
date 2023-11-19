@@ -93,9 +93,9 @@ const Swap = () => {
           mode ? "bg-white" : "bg-[#1E1E1E]"
         } bg-sw pt-[96px] pb-[179px] transition-[.4s]`}
       >
-        <section className="flex w-[90%] gap-[32px] mx-auto">
+        <section className="flex md:w-[90%] gap-[32px] mx-auto">
           <div
-            className={`transition-[.4s] w-[80%] rounded-[16px] sw-bxshdw ${
+            className={`transition-[.4s] w-[80%] hidden md:block rounded-[16px] sw-bxshdw ${
               chartMod ? "max-w-[100%] p-[16px]" : "max-w-0 invisible"
             } `}
           >
@@ -103,7 +103,7 @@ const Swap = () => {
               symbol={symbol}
             />
           </div>
-          <div className="max-w-[584px] mx-auto bg-white rounded-[16px] sw-bxshdw w-[35%] p-[16px]">
+          <div className="md:max-w-[584px] w-[99%] mx-auto bg-white rounded-[16px] sw-bxshdw md:w-[35%] p-[16px]">
             <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">
               Swap
             </h1>
