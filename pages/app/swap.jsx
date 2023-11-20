@@ -113,7 +113,7 @@ const Swap = () => {
             <hr className="mb-[16px] text-[#E3E8EF] bg-[#E3E8EF]" />
             <div className="h-[24px] mb-[16px] w-full">
               <span className="h-full flex gap-[16px] float-right">
-                <button onClick={toggleChart} className="">
+                <button onClick={toggleChart} className="hidden md:block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -148,15 +148,6 @@ const Swap = () => {
                   <Image width={23} height={1} src="/images/fi_settings.svg" alt="settings" />
                 </button> */}
               </span>
-            </div>
-            <div
-              className={`transition-[.4s] md:hidden rounded-[16px] ${
-                chartMod ? "max-h-[100%]" : "max-h-0 invisible"
-              } `}
-            >
-              <TradingViewWidget
-                symbol={symbol}
-              />
             </div>
             <div className="p-[8px] border border-[#E3E8EF] rounded-[16px]">
               <div className="h-[40px]">
