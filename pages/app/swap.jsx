@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useData } from "@/context/DataContext";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
-import { useData } from "@/context/DataContext";
 import Button from "../component/Button";
-import TradingViewWidget from "@/components/TradingViewWidget"
-import { connectWallet } from "../../utils/connectWallet";
-
+import {
+  SwapETHToToken,
+  SwapTokenToETH,
+  NotSupported,
+} from "@/utils/swapToken";
+import fetchBalance from "@/utils/fetchBalance";
 
 const Swap = () => {
   const { mode, setIsOnApp } = useData();
-  const [isConnected, setIsConnected] = useState(false);
+  const { address, isConnected } = useAccount();
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
   const [firstToken, setFirstToken] = useState("BTC");
   const [secondToken, setSecondToken] = useState("USDT");
-  const [order, setOrder] = useState(null)
-  const [symbol, setSymbol] = useState("BTCUSDT")
+  const [order, setOrder] = useState(null);
+  const [symbol, setSymbol] = useState("BTCUSDT");
   const removeModal = () => {
     setModal(false);
   };
   useEffect(() => {
-    setIsOnApp(true)
-  }, [])
+    setIsOnApp(true);
+  }, []);
+
   const togglePopUp = (val) => {
     setModal(true);
     setOrder(val);
@@ -30,52 +37,48 @@ const Swap = () => {
   const handleSwitch = () => {
     setStat(true);
     setTimeout(() => setStat(false), 500);
-    setFirstToken(secondToken)
-    setSecondToken(firstToken)
-    setSymbol(secondToken+firstToken)
+    setFirstToken(secondToken);
+    setSecondToken(firstToken);
+    setSymbol(secondToken + firstToken);
   };
   const toggleChart = () => {
     setChartMod(!chartMod);
   };
   const selectToken = (val) => {
     if (val == secondToken && order == "from") {
-      setFirstToken(val)
-      setSecondToken(firstToken)
-      setSymbol(val+firstToken)
-      setModal(false)
-      return
-    }
-    else if (val == firstToken && order == "to") {
-      setSecondToken(val)
-      setFirstToken(secondToken)
-      setSymbol(secondToken+val)
-      setModal(false)
-      return
+      setFirstToken(val);
+      setSecondToken(firstToken);
+      setSymbol(val + firstToken);
+      setModal(false);
+      return;
+    } else if (val == firstToken && order == "to") {
+      setSecondToken(val);
+      setFirstToken(secondToken);
+      setSymbol(secondToken + val);
+      setModal(false);
+      return;
     }
     if (order == "from") {
-      setFirstToken(val)
-      setSymbol(val+secondToken)
+      setFirstToken(val);
+      setSymbol(val + secondToken);
+    } else {
+      setSecondToken(val);
+      setSymbol(firstToken + val);
     }
-    else {
-      setSecondToken(val)
-      setSymbol(firstToken+val)
-    }
-    setModal(false)
-  }
-  const TokenImg = ({tokenType, classNames}) => {
-    let iconName
-    let iconWidth
+    setModal(false);
+  };
+  const TokenImg = ({ tokenType, classNames }) => {
+    let iconName;
+    let iconWidth;
     if (tokenType == "ETH") {
-      iconName = "Ethereum_logo.svg"
-      iconWidth = 12
-    }
-    else if (tokenType == "BTC") {
-      iconName = "btc.svg"
-      iconWidth = 23
-    }
-    else {
-      iconName = "tether-logo.svg"
-      iconWidth = 23
+      iconName = "Ethereum_logo.svg";
+      iconWidth = 12;
+    } else if (tokenType == "BTC") {
+      iconName = "btc.svg";
+      iconWidth = 23;
+    } else {
+      iconName = "tether-logo.svg";
+      iconWidth = 23;
     }
     return (
       <Image
@@ -85,8 +88,8 @@ const Swap = () => {
         className={classNames}
         alt="token"
       />
-    )
-  }
+    );
+  };
   return (
     <>
       <HeadComp title="Zeit | Swap" />
@@ -101,9 +104,7 @@ const Swap = () => {
               chartMod ? "max-w-[100%] p-[16px]" : "max-w-0 invisible"
             } `}
           >
-            <TradingViewWidget
-              symbol={symbol}
-            />
+            <TradingViewWidget symbol={symbol} />
           </div>
           <div className="md:max-w-[584px] w-[95%] mx-auto bg-white rounded-[16px] sw-bxshdw md:w-[35%] p-[16px]">
             <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">
@@ -258,15 +259,23 @@ const Swap = () => {
               <span className="">Slippage</span>
               <span className="">5%</span>
             </div>
-            <div className="">
-              {!isConnected ? (
-                <Button onClickHandler={() => connectWallet(setIsConnected)}>
-                  Connect Wallet
+            <section className="">
+              {isConnected ? (
+                <Button
+                  onClickHandler={
+                    firstToken === "ETH"
+                      ? SwapETHToToken
+                      : firstToken === "USDT"
+                      ? SwapTokenToETH
+                      : NotSupported
+                  }
+                >
+                  Swap
                 </Button>
               ) : (
-                <Button> Swap</Button>
-              )}         
-            </div>
+                <ConnectButton chainStatus="full" className="bg-red-400" />
+              )}
+            </section>
           </div>
         </section>
       </main>
@@ -326,22 +335,34 @@ const Swap = () => {
             Hot Tokens
           </h3>
           <div className="flex gap-[16px] overflow-x-auto mb-[12px] pb-[4px]">
-            <button onClick={() => selectToken("BTC")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+            <button
+              onClick={() => selectToken("BTC")}
+              className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]"
+            >
               <TokenImg classNames="mr-[4px]" tokenType="BTC" />
               BTC
             </button>
-            <button onClick={() => selectToken("ETH")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+            <button
+              onClick={() => selectToken("ETH")}
+              className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]"
+            >
               <TokenImg classNames="mr-[4px]" tokenType="ETH" />
               ETH
             </button>
-            <button onClick={() => selectToken("USDT")} className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]">
+            <button
+              onClick={() => selectToken("USDT")}
+              className="h-[40px] p-[8px] text-[#364152] font-Inter font-[400] flex items-center text-[14px]"
+            >
               <TokenImg classNames="mr-[4px]" tokenType="USDT" />
               USDT
             </button>
           </div>
           <h3 className="font-Inter text-[16px] font-[700]">Token List</h3>
           <div className="overflow-y-auto max-h-[30vh]">
-            <button onClick={() => selectToken("BTC")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button
+              onClick={() => selectToken("BTC")}
+              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
+            >
               <div className="flex items-center gap-[21px]">
                 <TokenImg classNames="mr-[4px]" tokenType="BTC" />
                 <div className="">
@@ -362,7 +383,10 @@ const Swap = () => {
                 </p> */}
               </div>
             </button>
-            <button onClick={() => selectToken("ETH")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button
+              onClick={() => selectToken("ETH")}
+              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
+            >
               <div className="flex items-center gap-[21px]">
                 <TokenImg classNames="mr-[4px]" tokenType="ETH" />
                 <div className="">
@@ -383,7 +407,10 @@ const Swap = () => {
                 </p> */}
               </div>
             </button>
-            <button onClick={() => selectToken("USDT")} className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]">
+            <button
+              onClick={() => selectToken("USDT")}
+              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
+            >
               <div className="flex items-center gap-[21px]">
                 <TokenImg classNames="mr-[4px]" tokenType="USDT" />
                 <div className="">
