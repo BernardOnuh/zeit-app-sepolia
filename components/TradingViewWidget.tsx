@@ -59,7 +59,7 @@ export default function TradingViewWidget({symbol}) {
 
   return (
     <div>
-      <div className="tradingview-widget-container w-full" style={{height: "max"}}>
+      <div className="tradingview-widget-container w-full" style={{height: "90vh"}}>
         <div
           id="tradingview_23136"
           style={{ height: "calc(100% - 32px)", width: "100%" }}
