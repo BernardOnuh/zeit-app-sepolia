@@ -4,7 +4,10 @@ import { useData } from "@/context/DataContext";
 import Image from "next/image";
 
 const Privacy = () => {
-  const { mode } = useData();
+  const {mode, setIsOnApp} = useData()
+  useEffect(() => {
+    setIsOnApp(false)
+  }, [])
   return (
     <>
       <HeadComp title="Zeit | Privacy Policy" />

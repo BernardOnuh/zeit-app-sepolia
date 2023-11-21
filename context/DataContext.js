@@ -4,9 +4,9 @@ const {Provider}= DataContext
 
 const DataGet=({children})=>{
     const [mode, setMode] = useState(true)
-    const [isConnected, setIsConnected] = useState(false);
+    const [isOnApp, setIsOnApp] = useState(false);
     return (
-        <Provider value={{setMode, mode, isConnected, setIsConnected}}>
+        <Provider value={{setMode, mode, isOnApp, setIsOnApp}}>
             {children}
         </Provider>
     )

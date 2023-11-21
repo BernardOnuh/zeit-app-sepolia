@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
 import { useData } from "@/context/DataContext";
 import Button from "../component/Button";
 import TradingViewWidget from "@/components/TradingViewWidget"
-
 import { connectWallet } from "../../utils/connectWallet";
 
 
 const Swap = () => {
-  const { mode } = useData();
+  const { mode, setIsOnApp } = useData();
   const [isConnected, setIsConnected] = useState(false);
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
@@ -21,6 +20,9 @@ const Swap = () => {
   const removeModal = () => {
     setModal(false);
   };
+  useEffect(() => {
+    setIsOnApp(true)
+  }, [])
   const togglePopUp = (val) => {
     setModal(true);
     setOrder(val);
@@ -263,7 +265,7 @@ const Swap = () => {
                 </Button>
               ) : (
                 <Button> Swap</Button>
-              )}
+              )}         
             </div>
           </div>
         </section>

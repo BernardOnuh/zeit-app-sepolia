@@ -1,10 +1,13 @@
 import HeadComp from '@/layout/HeadComp'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useData } from "@/context/DataContext"
 import Image from 'next/image'
 
 const Terms = () => {
-  const {mode} = useData()
+  const {mode, setIsOnApp} = useData()
+  useEffect(() => {
+    setIsOnApp(false)
+  }, [])
   return (
     <>
       <HeadComp title="Zeit | Terms of Use" />

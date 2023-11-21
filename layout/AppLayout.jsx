@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const AppLayout = () => {
     const {pathname, asPath, events} = useRouter()
@@ -22,7 +22,7 @@ const AppLayout = () => {
         <header className={`fixed flex items-center justify-between bg-transparent backdrop-blur-sm w-full py-3 z-[3] px-[1rem] md:px-[2rem]`}>
             <div className="">
             <Link href="/">
-                <Image src="/images/Logo.svg" alt="logo" height={50} width={50}/>
+                <Image src="/images/Zeit-Logo.svg" alt="logo" height={50} width={50}/>
             </Link>
             </div>
             <nav className="w-fit border border-[#E3E8EF] rounded-[16px] px-[8px]">
@@ -31,7 +31,10 @@ const AppLayout = () => {
                 </ul>
             </nav>
             <div className="">
-                <button className="l-trans-btn medium-btn">Connect Wallet</button>
+              <ConnectButton 
+                chainStatus="full"
+                className="bg-red-400"
+              />
             </div>
       </header>
     </>

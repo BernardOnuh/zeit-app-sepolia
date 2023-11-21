@@ -7,8 +7,12 @@ import Link from 'next/link'
 
 
 const Index = () => {
-  const {mode} = useData()
+  const {mode, setIsOnApp} = useData()
   const { push } = useRouter()
+  
+  useEffect(() => {
+    setIsOnApp(false)
+  }, [])
   const handleModal = () => {
     const currLcn = new URL(window.location)
     currLcn.searchParams.set("modal", true)
