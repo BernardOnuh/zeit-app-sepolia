@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
-import '@rainbow-me/rainbowkit/styles.css';
+import "@rainbow-me/rainbowkit/styles.css";
 import {
   getDefaultWallets,
   RainbowKitProvider,
-  lightTheme
-} from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+  lightTheme,
+} from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
   mainnet,
   polygon,
@@ -15,30 +15,27 @@ import {
   base,
   zora,
   goerli,
-} from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+  sepolia,
+} from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 const isServer = typeof window === "undefined";
 const WOW = !isServer ? require("wow.js") : null;
 import Layout from "@/layout/Layout";
 import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
 
-
-const { chains, publicClient } = configureChains(
-  [goerli],
-  [publicProvider()]
-)
+const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
 const { connectors } = getDefaultWallets({
   appName: "ZeitProtocol",
-  projectId: 'Johnex',
+  projectId: "Johnex",
   chains,
-})
+});
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient
-})
+  publicClient,
+});
 
 export default function App({
   Component,
@@ -54,8 +51,8 @@ export default function App({
           <RainbowKitProvider
             chains={chains}
             theme={lightTheme({
-              accentColor: '#5BC0BE',
-              accentColorForeground: 'white',
+              accentColor: "#5BC0BE",
+              accentColorForeground: "white",
             })}
           >
             <Layout>
