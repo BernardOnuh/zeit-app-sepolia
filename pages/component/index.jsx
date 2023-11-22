@@ -131,7 +131,7 @@ const Index = () => {
             <Image src="/images/dot.svg" height={1} width={12} alt="socials" />
           </button>
         </div>
-        <div className="mt-[166px]">
+        {/* <div className="mt-[166px]">
           <h4 className={`${mode ? "text-black" : "text-white"} transition-[.4s] text-[20px] font-Comfortaa wow fadeInDown font-[600]`}>Stay Informed</h4>
           <div className="md:w-fit w-[80%] mt-[2rem] flex gap-4 md:gap-[18px] flex-col items-center md:flex-row justify-between mx-auto">
             <div className="md:w-[320px] relative w-full">
@@ -145,7 +145,7 @@ const Index = () => {
               <button className={`default-btn medium-btn transition-[.4s] w-full wow fadeIn md:block hidden`}>Sign Up for Newsletter</button>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
     </>
     
