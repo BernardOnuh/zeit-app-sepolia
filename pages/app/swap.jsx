@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+"use client"
+import React, { useEffect, useState, useRef } from "react";
 import { useData } from "@/context/DataContext";
 import { useAccount } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
@@ -20,16 +21,28 @@ const Swap = () => {
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
   const [firstToken, setFirstToken] = useState("BTC");
+  const [loadingState, setLoadingState] = useState(false)
   const [secondToken, setSecondToken] = useState("USDT");
   const [order, setOrder] = useState(null);
   const [symbol, setSymbol] = useState("BTCUSDT");
+  const [ tokenAmount, setTokenAmount] = useState({
+    firstTokenAmount: 0,
+    secondTokenAmount: 0,
+  })
+  const inputRef = useRef()
   const removeModal = () => {
     setModal(false);
   };
   useEffect(() => {
     setIsOnApp(true);
   }, []);
-
+  const changeAmount = ({target}) => {
+    const { name, value } = target
+    setTokenAmount({
+        ...tokenAmount,
+        [name] : value
+      })
+  }
   const togglePopUp = (val) => {
     setModal(true);
     setOrder(val);
@@ -177,7 +190,11 @@ const Swap = () => {
                 </button>
                 <div className="">
                   <input
+                    ref={inputRef}
                     type="number"
+                    name="firstTokenAmount"
+                    value={tokenAmount.firstTokenAmount}
+                    onChange={changeAmount}
                     className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
                     placeholder="0.000"
                   />
@@ -245,7 +262,11 @@ const Swap = () => {
                 </button>
                 <div className="">
                   <input
+                    ref={inputRef}
                     type="number"
+                    name="secondTokenAmount"
+                    value={tokenAmount.secondTokenAmount}
+                    onChange={changeAmount}
                     className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
                     placeholder="0.000"
                   />
@@ -264,16 +285,16 @@ const Swap = () => {
                 <Button
                   onClickHandler={
                     firstToken === "ETH"
-                      ? SwapETHToToken
+                      ? SwapETHToToken(tokenAmount.secondTokenAmount, tokenAmount.firstTokenAmount)
                       : firstToken === "USDT"
-                      ? SwapTokenToETH
+                      ? SwapTokenToETH(tokenAmount.firstTokenAmount, tokenAmount.secondTokenAmount)
                       : NotSupported
                   }
                 >
                   Swap
                 </Button>
               ) : (
-                <ConnectButton chainStatus="full" className="bg-red-400" />
+                <button disabled className="w-full medium-btn default-btn">Wallet Not Connected</button>
               )}
             </section>
           </div>

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut, } from 'next-auth/react'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { Oval } from 'react-loader-spinner'
 import supabase from '@/supabase'
@@ -491,7 +491,6 @@ const Header = () => {
           )}
         </div>
       </section>
-      <ToastContainer />
     </>
   )
 }

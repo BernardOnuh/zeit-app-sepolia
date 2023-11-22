@@ -8,7 +8,7 @@
 } */
 /* generic styles */
 :root {
-    --toastify-icon-color-success: #8D99FF !important;
+    --toastify-icon-color-success: #5BC0BE !important;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -81,7 +81,7 @@ input[type=number] {
 }
 /* Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light  */
 .Toastify__progress-bar--success {
-    background-color: #8D99FF !important;
+    background-color: #5BC0BE !important;
 }
 .Toastify__toast-body {
     font-family: 'Comfortaa' !important;

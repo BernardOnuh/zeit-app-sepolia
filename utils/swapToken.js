@@ -2,6 +2,8 @@ import { ethers } from "ethers";
 import ERC20ABI from "./abi/ERC20ABI";
 import ExchangeABI from "./abi/exchangeAbi";
 import { EXCHANGE_CA, TOKEN_CA } from "@/constants/constants";
+import { toast } from "react-toastify"
+
 
 // 1. instantiate the contract
 // 2. approve token
@@ -10,6 +12,7 @@ import { EXCHANGE_CA, TOKEN_CA } from "@/constants/constants";
 // 4.
 
 export async function SwapETHToToken(tokenAmount, ETHAmount) {
+  setLoadingState(true)
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = await provider.getSigner();
 
@@ -22,22 +25,51 @@ export async function SwapETHToToken(tokenAmount, ETHAmount) {
 
   //   const approve = async function (tokenAddress, amount) {
   const approveToken = await ERC20Contract.approve(TOKEN_CA, tokenAmount);
-  console.log("Approving Token.....");
+  toast.success("Approving Swap", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
   await approveToken.wait();
 
-  console.log("Approval Successful!");
+  toast.success("Approval Successful, swapping..", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
 
   // ETH TO TOKEN SWAP
-  console.log("Swapping ETH to Token.....");
+  // console.log("Swapping ETH to Token.....");
   const swapETHToToken = await ExchangeContract.ethToTokenSwap(
     ETHAmount,
     tokenAmount
   );
   await swapETHToToken.wait();
-  console.log("Swap Successful!");
+  toast.success("Swap Successful", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
+  // setLoadingState(false)
 }
 
 export async function SwapTokenToETH(tokenAmount, ETHAmount) {
+  // setLoadingState(true)
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = await provider.getSigner();
 
@@ -50,21 +82,58 @@ export async function SwapTokenToETH(tokenAmount, ETHAmount) {
 
   //   const approve = async function (tokenAddress, amount) {
   const approveToken = await ERC20Contract.approve(TOKEN_CA, tokenAmount);
-  console.log("Approving Token.....");
+  toast.success("Approving Token...", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
   await approveToken.wait();
 
-  console.log("Approval Successful!");
+  toast.success("Approval Successful, swapping...", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
 
   // TOKEN TO ETH
-  console.log("Swapping ETH to Token.....");
+  // console.log("Swapping ETH to Token.....");
   const swapTokenToETH = await ExchangeContract.tokenToETHSwap(
     ETHAmount,
     tokenAmount
   );
   await swapTokenToETH.wait();
-  console.log("Swap Successful!");
+  toast.success("Swap Successful", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
+  // setLoadingState(false)
 }
 
 export function NotSupported() {
-  alert("Token Pair Not Yet Supported");
+  toast.success("Pair Not Supported yet", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  })
 }
