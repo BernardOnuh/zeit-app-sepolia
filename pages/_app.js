@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ToastContainer } from "react-toastify"
+import { Chain} from '@rainbow-me/rainbowkit'
 import {
   getDefaultWallets,
   RainbowKitProvider,
@@ -39,8 +40,38 @@ import Layout from "@/layout/Layout";
 import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
 
+const avalanche = {
+  id: 43_114,
+  name: 'Arthera Testnet',
+  network: 'arthera',
+  iconUrl: 'https://pbs.twimg.com/profile_images/1732782618817552386/WNIvpxoT.jpg',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Arthera Testnet',
+    symbol: 'AA',
+  },
+  rpcUrls: {
+    public: { http: ['https://rpc-test.arthera.net'] },
+    default: { http: ['https://rpc-test.arthera.net'] },
+  },
+  blockExplorers: {
+    default: {  url: 'https://explorer-test.arthera.net' },
+    etherscan: {  url: 'https://explorer-test.arthera.net' },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 11_907_934,
+    },
+  },
+  testnet: false,
+};
+
+
+
 const { chains, publicClient } = configureChains(
-  [sepolia],
+  [avalanche],
   [
     publicProvider(),
   ]
