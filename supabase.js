@@ -5,5 +5,6 @@
 //const supabase = createClient(supabaseUrl, supabaseKey, {
 //    auth: { persistSession: false },
 //})
+//
 
 //export default supabase
