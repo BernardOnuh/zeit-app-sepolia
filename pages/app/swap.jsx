@@ -1,27 +1,24 @@
-"use client"
 import React, { useEffect, useState, useRef } from "react";
 import { useData } from "@/context/DataContext";
 import { useAccount } from "wagmi";
-// import { ConnectButton } from "@rainbow-me/rainbowkit";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
 import Button from "../component/Button";
-import {
-  SwapETHToToken,
-  SwapTokenToETH,
-  NotSupported,
-} from "@/utils/swapToken";
-import fetchBalance from "@/utils/fetchBalance";
+import { ARTHERACoins } from "@/constants/coins";
 
 const Swap = () => {
+  let coinlist = []
+  // const getCoinList = ARTHERACoins.foreach(currentValue => {
+  //   coinlist.push(currentValue)
+  // })
+  console.log(ARTHERACoins)
   const { mode, setIsOnApp } = useData();
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
   const [firstToken, setFirstToken] = useState("BTC");
-  const [loadingState, setLoadingState] = useState(false)
   const [secondToken, setSecondToken] = useState("USDT");
   const [order, setOrder] = useState(null);
   const [symbol, setSymbol] = useState("BTCUSDT");
@@ -282,15 +279,7 @@ const Swap = () => {
             </div>
             <section className="">
               {isConnected ? (
-                <Button
-                  onClickHandler={
-                    firstToken === "ETH"
-                      ? SwapETHToToken(tokenAmount.secondTokenAmount, tokenAmount.firstTokenAmount)
-                      : firstToken === "USDT"
-                      ? SwapTokenToETH(tokenAmount.firstTokenAmount, tokenAmount.secondTokenAmount)
-                      : NotSupported
-                  }
-                >
+                <Button>
                   Swap
                 </Button>
               ) : (

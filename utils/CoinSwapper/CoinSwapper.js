@@ -27,8 +27,8 @@ import CoinField from "./CoinField";
 import CoinDialog from "./CoinDialog";
 import LoadingButton from "../Components/LoadingButton";
 import WrongNetwork from "../Components/wrongNetwork";
-import COINS from "../constants/coins";
-import * as chains from "../constants/chains";
+import COINS from "../../constants/coins";
+import * as chains from "../../constants/chains";
 
 const styles = (theme) => ({
   paperContainer: {

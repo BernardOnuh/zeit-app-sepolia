@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ToastContainer } from "react-toastify"
-import { Chain} from '@rainbow-me/rainbowkit'
+// import { Chain} from '@rainbow-me/rainbowkit'
 import {
   getDefaultWallets,
   RainbowKitProvider,
@@ -10,6 +10,7 @@ import {
   connectorsForWallets
 } from "@rainbow-me/rainbowkit";
 import { 
+  metaMaskWallet,
   walletConnectWallet,
   injectedWallet,
   rainbowWallet,
@@ -17,22 +18,22 @@ import {
   braveWallet,
   coin98Wallet,
   coinbaseWallet,
-  metaMaskWallet,
   uniswapWallet,
+  rabbyWallet ,
   zerionWallet
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  zora,
-  goerli,
-  sepolia,
-} from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
+// import {
+//   mainnet,
+//   polygon,
+//   optimism,
+//   arbitrum,
+//   base,
+//   zora,
+//   goerli,
+//   sepolia,
+// } from "wagmi/chains";
+// import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 const isServer = typeof window === "undefined";
 const WOW = !isServer ? require("wow.js") : null;
@@ -40,8 +41,8 @@ import Layout from "@/layout/Layout";
 import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
 
-const avalanche = {
-  id: 43_114,
+const arthera = {
+  id: 10243,
   name: 'Arthera Testnet',
   network: 'arthera',
   iconUrl: 'https://pbs.twimg.com/profile_images/1732782618817552386/WNIvpxoT.jpg',
@@ -71,7 +72,7 @@ const avalanche = {
 
 
 const { chains, publicClient } = configureChains(
-  [avalanche],
+  [arthera],
   [
     publicProvider(),
   ]
@@ -82,15 +83,16 @@ const connectors = connectorsForWallets([
     groupName: 'Recommended',
     wallets: [
       injectedWallet({ chains }),
+      metaMaskWallet({projectId: "Johnex", chains}),
       rainbowWallet({ projectId: "Johnex", chains }),
       walletConnectWallet({ projectId: "Johnex", chains }),
       trustWallet({projectId: "Johnex", chains}),
       braveWallet({projectId: "Johnex", chains}),
       coin98Wallet({projectId: "Johnex", chains}),
       coinbaseWallet({projectId: "Johnex", chains}),
-      metaMaskWallet({projectId: "Johnex", chains}),
       uniswapWallet({projectId: "Johnex", chains}),
       zerionWallet({projectId: "Johnex", chains}),
+      rabbyWallet({projectId: "Johnex", chains}),
     ],
   },
 ]);

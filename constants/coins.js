@@ -32,21 +32,31 @@ const ARTHERACoins = [
     name: "Ether",
     abbr: "ETH",
     address: "", // Weth address is fetched from the router
+    icon: "",
   },
   {
-    name: "WETH",
+    name: "Wrapped Ethereum",
     abbr: "WETH",
     address: "0xB4a743C2861e69DF1dfE10E3E0d59f95824a5189",
+    icon: "",
   },
   {
-    name: "PEPE",
-    abbr: "PEPECOIN",
+    name: "Pepecoin",
+    abbr: "PEPE",
     address: "0x4014ac809C24A63F1775868325DAeEd32d45434b",
+    icon: "",
   },
   {
-    name: "ZEIT",
+    name: "Zeit token",
     abbr: "ZEIT",
     address: "0xBF5f70dc1c6CDe1c9EDec2fcFEf6a5cab60d11b4",
+    icon: "",
+  },
+  {
+    name: "USDT",
+    abbr: "USDT",
+    address: null,
+    icon: "",
   },
 ]
 

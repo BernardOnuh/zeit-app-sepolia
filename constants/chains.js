@@ -1,9 +1,9 @@
-export const networks = [11155111 ,10243]
+export const networks = [11155111, 10243]
 
 export const ChainId = {
 
   SEPOLIA: 11155111,
-  ARTHERA:10243,
+  ARTHERA: 10243,
 };
 
 export const routerAddress = new Map();

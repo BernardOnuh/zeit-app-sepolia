@@ -46,3 +46,7 @@ next-env.d.ts
 
 .env
 resource
+
+# gitpod
+
+.gitpod.yml
