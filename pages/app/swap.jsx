@@ -15,10 +15,9 @@ import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
 
 const Swap = () => {
-  
   const [numOne, numTwo] = COINS
   const { mode, setIsOnApp } = useData();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const [connectedState, setConnectedState] = useState(false)
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
@@ -41,19 +40,18 @@ const Swap = () => {
   useEffect(() => {
     if (isConnected === true) {
       setConnectedState(true)
-      // network.provider = getProvider()
-      // const signer = getSigner(provider)
-      // const {balance, symbol} = getBalanceAndSymbol(address, 0xBF5f70dc1c6CDe1c9EDec2fcFEf6a5cab60d11b4, provider, signer)
-      // console.log(balance, symbol)
+      setupConnection().then(network => {
+        const {balance, symbol} = getBalanceAndSymbol(network.account, address, network.provider, network.signer, network.weth.address, network.coins)
+      console.log(balance, symbol)
+      console.log("balance, symbol")
+    }).catch(error => {
+        console.error(error)
+    })
     }
     else {
       setConnectedState(false)
     }
   }, [isConnected])
-  
-  if (connectedState) {
-    setupConnection()
-  }
   const changeAmount = ({target}) => {
     const { name, value } = target
     setTokenAmount({
@@ -164,23 +162,23 @@ const Swap = () => {
                     <path
                       d="M6 20V14"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M18 20V10"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M12 20V4"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </button>

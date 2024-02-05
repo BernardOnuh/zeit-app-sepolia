@@ -154,21 +154,21 @@ const Swap = () => {
                     <path
                       d="M6 20V14"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M18 20V10"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M12 20V4"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
-                      stroke-width="2"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
