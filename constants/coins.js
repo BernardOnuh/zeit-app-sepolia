@@ -58,6 +58,12 @@ const ARTHERACoins = [
     address: null,
     icon: "",
   },
+  {
+    name: "Bitcoin",
+    abbr: "BTC",
+    address: null,
+    icon: "",
+  },
 ]
 
 const COINS = new Map();

@@ -4,17 +4,22 @@ import { useAccount } from "wagmi";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
-import Button from "../component/Button";
-import { ARTHERACoins } from "@/constants/coins";
+import Button from "../page/Button";
+import setupConnection from "@/context/connection"
+import { 
+  getBalanceAndSymbol, 
+  getProvider, 
+  getSigner, } from "@/utils/ethereumFunctions";
+import Input from "@/components/reusable comp/input";
+import COINS from "@/constants/coins";
+import TokenImg from "@/components/widgets/token-image";
 
 const Swap = () => {
-  let coinlist = []
-  // const getCoinList = ARTHERACoins.foreach(currentValue => {
-  //   coinlist.push(currentValue)
-  // })
-  console.log(ARTHERACoins)
+  
+  const [numOne, numTwo] = COINS
   const { mode, setIsOnApp } = useData();
   const { isConnected } = useAccount();
+  const [connectedState, setConnectedState] = useState(false)
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
@@ -23,8 +28,8 @@ const Swap = () => {
   const [order, setOrder] = useState(null);
   const [symbol, setSymbol] = useState("BTCUSDT");
   const [ tokenAmount, setTokenAmount] = useState({
-    firstTokenAmount: 0,
-    secondTokenAmount: 0,
+    firstTokenAmount: "0.000",
+    secondTokenAmount: "0.000",
   })
   const inputRef = useRef()
   const removeModal = () => {
@@ -33,6 +38,22 @@ const Swap = () => {
   useEffect(() => {
     setIsOnApp(true);
   }, []);
+  useEffect(() => {
+    if (isConnected === true) {
+      setConnectedState(true)
+      // network.provider = getProvider()
+      // const signer = getSigner(provider)
+      // const {balance, symbol} = getBalanceAndSymbol(address, 0xBF5f70dc1c6CDe1c9EDec2fcFEf6a5cab60d11b4, provider, signer)
+      // console.log(balance, symbol)
+    }
+    else {
+      setConnectedState(false)
+    }
+  }, [isConnected])
+  
+  if (connectedState) {
+    setupConnection()
+  }
   const changeAmount = ({target}) => {
     const { name, value } = target
     setTokenAmount({
@@ -77,29 +98,35 @@ const Swap = () => {
     }
     setModal(false);
   };
-  const TokenImg = ({ tokenType, classNames }) => {
-    let iconName;
-    let iconWidth;
-    if (tokenType == "ETH") {
-      iconName = "Ethereum_logo.svg";
-      iconWidth = 12;
-    } else if (tokenType == "BTC") {
-      iconName = "btc.svg";
-      iconWidth = 23;
-    } else {
-      iconName = "tether-logo.svg";
-      iconWidth = 23;
-    }
-    return (
-      <Image
-        width={iconWidth}
-        height={1}
-        src={`/images/${iconName}`}
-        className={classNames}
-        alt="token"
-      />
-    );
-  };
+  const getCoinList = numTwo[1].map(({name, abbr, address, icon}) => {
+    return(
+      <button
+        key={address}
+        onClick={() => selectToken(abbr)}
+        className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
+      >
+        <div className="flex items-center gap-[21px]">
+          <TokenImg tokenType={abbr} />
+          <div className="">
+            <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
+              {abbr}
+            </p>
+            <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
+              {name}
+            </p>
+          </div>
+        </div>
+        <div className="">
+          <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
+            2,322.05
+          </p>
+          <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
+            2.58
+          </p>
+        </div>
+      </button>
+    )
+  })
   return (
     <>
       <HeadComp title="Zeit | Swap" />
@@ -181,25 +208,11 @@ const Swap = () => {
                   </span>
                 </button>
               </div>
-              <div className="my-[8px] bg-[#F8FAFC] rounded-[8px] p-[8px] flex justify-between items-center">
-                <button className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
-                  MAX
-                </button>
-                <div className="">
-                  <input
-                    ref={inputRef}
-                    type="number"
-                    name="firstTokenAmount"
-                    value={tokenAmount.firstTokenAmount}
-                    onChange={changeAmount}
-                    className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
-                    placeholder="0.000"
-                  />
-                  <p className="text-[#9AA4B2] text-[14px] font-[400] font-Inter text-right">
-                    $0.00
-                  </p>
-                </div>
-              </div>
+              <Input 
+                inputRef={inputRef} 
+                tokenAmount={tokenAmount.firstTokenAmount}
+                changeAmount={changeAmount}
+              />
               <div className="h-[28px] flex justify-between mb-[8px]">
                 <button className="l-trans-btn small-btn">25%</button>
                 <button className="l-trans-btn small-btn">50%</button>
@@ -253,32 +266,18 @@ const Swap = () => {
                   </span>
                 </button>
               </div>
-              <div className="my-[8px] bg-[#EEF2F6] rounded-[8px] p-[8px] flex justify-between items-center">
-                <button className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
-                  MAX
-                </button>
-                <div className="">
-                  <input
-                    ref={inputRef}
-                    type="number"
-                    name="secondTokenAmount"
-                    value={tokenAmount.secondTokenAmount}
-                    onChange={changeAmount}
-                    className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
-                    placeholder="0.000"
-                  />
-                  <p className="text-[#9AA4B2] text-[14px] font-[400] font-Inter text-right">
-                    $0.00
-                  </p>
-                </div>
-              </div>
+              <Input 
+                inputRef={inputRef} 
+                tokenAmount={tokenAmount.secondTokenAmount}
+                changeAmount={changeAmount}
+              />
             </div>
             <div className="my-[16px] font-Inter text-[14px] font-[500] text-[#202939] flex justify-between items-center">
               <span className="">Slippage</span>
               <span className="">5%</span>
             </div>
             <section className="">
-              {isConnected ? (
+              {connectedState ? (
                 <Button>
                   Swap
                 </Button>
@@ -369,78 +368,7 @@ const Swap = () => {
           </div>
           <h3 className="font-Inter text-[16px] font-[700]">Token List</h3>
           <div className="overflow-y-auto max-h-[30vh]">
-            <button
-              onClick={() => selectToken("BTC")}
-              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
-            >
-              <div className="flex items-center gap-[21px]">
-                <TokenImg classNames="mr-[4px]" tokenType="BTC" />
-                <div className="">
-                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
-                    BTC
-                  </p>
-                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
-                    Bitcoin
-                  </p>
-                </div>
-              </div>
-              <div className="">
-                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
-                  2,322.05
-                </p>
-                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
-                  2.58
-                </p> */}
-              </div>
-            </button>
-            <button
-              onClick={() => selectToken("ETH")}
-              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
-            >
-              <div className="flex items-center gap-[21px]">
-                <TokenImg classNames="mr-[4px]" tokenType="ETH" />
-                <div className="">
-                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
-                    ETH
-                  </p>
-                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
-                    Ethereum
-                  </p>
-                </div>
-              </div>
-              <div className="">
-                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
-                  2,322.05
-                </p>
-                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
-                  2.58
-                </p> */}
-              </div>
-            </button>
-            <button
-              onClick={() => selectToken("USDT")}
-              className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
-            >
-              <div className="flex items-center gap-[21px]">
-                <TokenImg classNames="mr-[4px]" tokenType="USDT" />
-                <div className="">
-                  <p className="text-[#364152] text-left text-[16px] font-[400] font-Inter">
-                    USDT
-                  </p>
-                  <p className="text-[#697586] text-left text-[12px] font-[400] font-Inter">
-                    Tether
-                  </p>
-                </div>
-              </div>
-              <div className="">
-                {/* <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
-                  2,322.05
-                </p>
-                <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
-                  2.58
-                </p> */}
-              </div>
-            </button>
+            {getCoinList}
           </div>
         </div>
       </section>

@@ -20,7 +20,7 @@ import { useAccount } from "wagmi";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
-import Button from "../component/Button";
+import Button from "../page/Button";
 import {
   SwapETHToToken,
   SwapTokenToETH,
@@ -155,22 +155,22 @@ const Swap = () => {
                       d="M6 20V14"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
                       stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M18 20V10"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
                       stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M12 20V4"
                       stroke={chartMod ? "#5BC0BE" : "#000"}
                       stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </button>
