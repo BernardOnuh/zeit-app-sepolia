@@ -37,7 +37,7 @@ const ARTHERACoins = [
   {
     name: "Wrapped Ethereum",
     abbr: "WETH",
-    token: "0xB4a743C2861e69DF1dfE10E3E0d59f95824a5189",
+    token: "0x6434F66B998aF521bB7901746AaA9D319D1af013",
     icon: "",
   },
   {
