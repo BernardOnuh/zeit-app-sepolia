@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { Contract, ethers } from "ethers";
-//import { SnackbarProvider } from "notistack";
 import ConnectWalletPage from "./Test/connectWalletPage";
 import {
   getAccount,
@@ -11,9 +10,12 @@ import {
 } from "../utils/ethereumFunctions";
 import COINS from "../constants/coins";
 import * as chains from "../constants/chains";
+import {useState, useContext, createContext } from 'react'
+const DataContext = createContext({})
+const {Provider}= DataContext
 
 
-const Web3Provider = (props) => {
+const Web3Provider = ({children}) => {
   const [isConnected, setConnected] = useState(true);
   let network = Object.create( {} )
   network.provider = useRef(null);
@@ -91,18 +93,21 @@ const Web3Provider = (props) => {
     }, 1000);
   }
 
-  useEffect(async () => {
-    // Initial setup
-    console.log("Initial hook");
-    await setupConnection();
-    console.log("network: ", network);
+  useEffect(() => {
+    const fetchNetwork = async () => {
+      // Initial setup
+      console.log("Initial hook");
+      await setupConnection();
+      console.log("network: ", network);
 
-    // Start background listener
-    if (backgroundListener.current != null) {
-      clearInterval(backgroundListener.current);
+      // Start background listener
+      if (backgroundListener.current != null) {
+        clearInterval(backgroundListener.current);
+      }
+      const listener = createListener();
+      backgroundListener.current = listener;
     }
-    const listener = createListener();
-    backgroundListener.current = listener;
+    fetchNetwork()
     return () => clearInterval(backgroundListener.current);
   }, []);
 
@@ -116,13 +121,26 @@ const Web3Provider = (props) => {
       </div>
     );
   };
-
-  return (
-    <>
-      {!isConnected && renderNotConnected()}
-      {isConnected && <div> {props.render(network)}</div>}
-    </>
-  );
+  if(isConnected === true){ 
+    return (
+      <Provider value={{ network }}>
+          {children}
+      </Provider>
+    ) }
+    else {
+      return  renderNotConnected()
+    }
 };
 
 export default Web3Provider;
+
+
+// const NetworkProvider=({children})=>{
+//     return (
+//         <Provider value={{ network }}>
+//             {children}
+//         </Provider>
+//     )
+// }
+const useNetwork = () => useContext(DataContext)
+export {useNetwork, Web3Provider}

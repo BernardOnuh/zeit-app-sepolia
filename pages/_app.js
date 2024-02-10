@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
-import Web3Provider from "./network";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ToastContainer } from "react-toastify"
 // import { Chain} from '@rainbow-me/rainbowkit'
@@ -41,6 +40,7 @@ const WOW = !isServer ? require("wow.js") : null;
 import Layout from "@/layout/Layout";
 import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
+import { Web3Provider } from "@/context/connection";
 
 const arthera = {
   id: 10243,
@@ -121,10 +121,14 @@ export default function App({
               accentColorForeground: "white",
             })}
           >
-            
-            <Layout>
+            <Web3Provider>
+              <Layout>
+                <Component {...pageProps}/>
+              </Layout>
+            </Web3Provider>
+            {/* <Layout>
               <Component {...pageProps} />
-            </Layout>
+            </Layout> */}
           </RainbowKitProvider>
         </WagmiConfig>
       </DataGet>
@@ -132,10 +136,3 @@ export default function App({
     </SessionProvider>
   );
 }
-
-{/*<Web3Provider render={(network) => (
-  <Layout>
-  <Component {...pageProps} network={network} />
-</Layout>
-)}>
-</Web3Provider>*/}

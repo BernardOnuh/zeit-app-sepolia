@@ -14,9 +14,11 @@ import Input from "@/components/reusable comp/input";
 import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
 import { useBalance } from 'wagmi'
+import { useNetwork } from "@/context/connection";
 
 const Swap = () => {
   const [numOne, numTwo] = COINS
+  const {network} = useNetwork()
   const { mode, setIsOnApp } = useData();
   const { isConnected, address } = useAccount();
   const [connectedState, setConnectedState] = useState(false)
@@ -40,17 +42,18 @@ const Swap = () => {
 
   useEffect(() => {
     setIsOnApp(true);
+    console.log(network)
   }, []);
   useEffect(() => {
     if (isConnected === true) {
       setConnectedState(true)
-      setupConnection().then(network => {
-        const {balance, symbol} = getBalanceAndSymbol(network.account, address, network.provider, network.signer, network.weth.address, network.coins)
-      console.log(balance, symbol)
-      console.log("balance, symbol")
-    }).catch(error => {
-        console.error(error)
-    })
+    //   setupConnection().then(network => {
+    //     const {balance, symbol} = getBalanceAndSymbol(network.account, address, network.provider, network.signer, network.weth.address, network.coins)
+    //   console.log(balance, symbol)
+    //   console.log("balance, symbol")
+    // }).catch(error => {
+    //     console.error(error)
+    // })
     }
     else {
       setConnectedState(false)
