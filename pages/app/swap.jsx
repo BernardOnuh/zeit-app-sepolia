@@ -13,6 +13,7 @@ import {
 import Input from "@/components/reusable comp/input";
 import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
+import { useBalance } from 'wagmi'
 
 const Swap = () => {
   const [numOne, numTwo] = COINS
@@ -34,6 +35,9 @@ const Swap = () => {
   const removeModal = () => {
     setModal(false);
   };
+
+
+
   useEffect(() => {
     setIsOnApp(true);
   }, []);
@@ -96,13 +100,45 @@ const Swap = () => {
     }
     setModal(false);
   };
-  const getCoinList = numTwo[1].map(({name, abbr, address, icon}) => {
+
+
+
+
+
+const getCoinList = numTwo[1].map(({ name, abbr, token, icon }) => {
+  // Ensure that `token` is defined before rendering the button
+  if (!address) {
+    return null; // or handle it appropriately
+  }
+
+  // Fetch balance for each token
+  function TokenComponent({ token }) {
+  const { data: tokenData, error: tokenError, isLoading: tokenIsLoading } = useBalance({
+    address: address,
+    token: token,
+  });
+
+  if (tokenIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (tokenError) {
+    return <div>Error: {tokenError.message}</div>;
+  }
+  return (
+    <div>
+     {tokenData.formatted}
+    </div>
+  );
+}
+
     return(
       <button
-        key={address}
+        key={token}
         onClick={() => selectToken(abbr)}
         className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
       >
+      
         <div className="flex items-center gap-[21px]">
           <TokenImg tokenType={abbr} />
           <div className="">
@@ -116,7 +152,7 @@ const Swap = () => {
         </div>
         <div className="">
           <p className="text-[#697586] text-[14px] font-[500] font-Inter text-right">
-            2,322.05
+          <TokenComponent token={token}/>
           </p>
           <p className="text-[12px] font-Inter font-[600] text-[#17B26A] text-right">
             2.58
@@ -148,6 +184,7 @@ const Swap = () => {
             <p className="font-Inter text-[16px] text-[#364152] mb-[16px] font-[400]">
               Instantly Trade Tokens
             </p>
+        
             <hr className="mb-[16px] text-[#E3E8EF] bg-[#E3E8EF]" />
             <div className="h-[24px] mb-[16px] w-full">
               <span className="h-full flex gap-[16px] float-right">

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
+import Web3Provider from "./network";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ToastContainer } from "react-toastify"
 // import { Chain} from '@rainbow-me/rainbowkit'
@@ -120,6 +121,7 @@ export default function App({
               accentColorForeground: "white",
             })}
           >
+            
             <Layout>
               <Component {...pageProps} />
             </Layout>
@@ -130,3 +132,10 @@ export default function App({
     </SessionProvider>
   );
 }
+
+{/*<Web3Provider render={(network) => (
+  <Layout>
+  <Component {...pageProps} network={network} />
+</Layout>
+)}>
+</Web3Provider>*/}
