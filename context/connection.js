@@ -127,7 +127,11 @@ const Web3Provider = ({children}) => {
       </Provider>
     ) }
     else {
-      return  renderNotConnected()
+      return (
+        <Provider value={{ network }}>
+            {children}
+        </Provider>
+      )
     }
 };
 

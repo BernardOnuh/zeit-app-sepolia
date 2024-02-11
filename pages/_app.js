@@ -126,9 +126,6 @@ export default function App({
                 <Component {...pageProps}/>
               </Layout>
             </Web3Provider>
-            {/* <Layout>
-              <Component {...pageProps} />
-            </Layout> */}
           </RainbowKitProvider>
         </WagmiConfig>
       </DataGet>

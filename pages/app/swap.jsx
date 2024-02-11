@@ -25,8 +25,8 @@ const Swap = () => {
   const [popUp, setModal] = useState(false);
   const [rotateStat, setStat] = useState(false);
   const [chartMod, setChartMod] = useState(false);
-  const [firstToken, setFirstToken] = useState("BTC");
-  const [secondToken, setSecondToken] = useState("USDT");
+  const [firstToken, setFirstToken] = useState({name: "BTC", addy: ""});
+  const [secondToken, setSecondToken] = useState({name: "USDT", addy: ""});
   const [order, setOrder] = useState(null);
   const [symbol, setSymbol] = useState("BTCUSDT");
   const [ tokenAmount, setTokenAmount] = useState({
@@ -75,31 +75,49 @@ const Swap = () => {
     setTimeout(() => setStat(false), 500);
     setFirstToken(secondToken);
     setSecondToken(firstToken);
-    setSymbol(secondToken + firstToken);
+    setSymbol(secondToken.name + firstToken.name);
   };
   const toggleChart = () => {
     setChartMod(!chartMod);
   };
-  const selectToken = (val) => {
-    if (val == secondToken && order == "from") {
-      setFirstToken(val);
-      setSecondToken(firstToken);
-      setSymbol(val + firstToken);
+  const selectToken = (abbrev, cAddress) => {
+    if (abbrev == secondToken.name && order == "from") {
+      setSecondToken({
+        addy: firstToken.cAddress,
+        name: firstToken.name
+      });
+      setFirstToken({
+        addy: cAddress,
+        name: abbrev
+      });
+      setSymbol(abbrev + firstToken.name);
       setModal(false);
       return;
-    } else if (val == firstToken && order == "to") {
-      setSecondToken(val);
-      setFirstToken(secondToken);
-      setSymbol(secondToken + val);
+    } else if (abbrev == firstToken.name && order == "to") {
+      setFirstToken({
+        addy: secondToken.cAddress,
+        name: secondToken.name
+      });
+      setSecondToken({
+        addy: cAddress,
+        name: abbrev
+      });
+      setSymbol(secondToken.name + abbrev);
       setModal(false);
       return;
     }
     if (order == "from") {
-      setFirstToken(val);
-      setSymbol(val + secondToken);
+      setFirstToken({
+        addy: cAddress,
+        name: abbrev
+      });
+      setSymbol(abbrev + secondToken.name);
     } else {
-      setSecondToken(val);
-      setSymbol(firstToken + val);
+      setSecondToken({
+        addy: cAddress,
+        name: abbrev
+      });
+      setSymbol(firstToken.name + abbrev);
     }
     setModal(false);
   };
@@ -138,7 +156,7 @@ const getCoinList = numTwo[1].map(({ name, abbr, token, icon }) => {
     return(
       <button
         key={token}
-        onClick={() => selectToken(abbr)}
+        onClick={() => selectToken(abbr, token)}
         className="my-[8px] w-full hover:bg-[#00000010] transition-[.4s] rounded-[8px] flex justify-between items-center py-[4px] px-[8px]"
       >
       
@@ -233,8 +251,8 @@ const getCoinList = numTwo[1].map(({ name, abbr, token, icon }) => {
                   onClick={() => togglePopUp("from")}
                   className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]"
                 >
-                  <TokenImg classNames="mr-[4px]" tokenType={firstToken} />
-                  {firstToken}
+                  <TokenImg classNames="mr-[4px]" tokenType={firstToken.name} />
+                  {firstToken.name}
                   <span className="ml-[8px]">
                     <Image
                       width={20}
@@ -291,8 +309,8 @@ const getCoinList = numTwo[1].map(({ name, abbr, token, icon }) => {
                   onClick={() => togglePopUp("to")}
                   className="h-full rounded-[8px] w-fit font-Inter font-[400] text-[#364152] text-[14px] flex items-center p-[8px]"
                 >
-                  <TokenImg classNames="mr-[4px]" tokenType={secondToken} />
-                  {secondToken}
+                  <TokenImg classNames="mr-[4px]" tokenType={secondToken.name} />
+                  {secondToken.name}
                   <span className="ml-[8px]">
                     <Image
                       width={20}
