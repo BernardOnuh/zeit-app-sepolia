@@ -7,7 +7,7 @@ export const ChainId = {
 };
 
 export const routerAddress = new Map();
-routerAddress.set(ChainId.SEPOLIA, "0xe517d69a76F322d50c2A8D738b98bc3fDb7e0cc6");
+routerAddress.set(ChainId.SEPOLIA, "0x9e7429bDf634b9265f04F0E03149891bc957eD99");
 routerAddress.set(ChainId.ARTHERA, "0xfd89848127b285152262cda8A8CF54B16F6a8015");
 
 
