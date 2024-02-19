@@ -28,7 +28,7 @@ function TokenComponent({ token }) {
 }
 
 
-const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount }) => {
+const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount, inputName }) => {
   const { address } = useAccount();
   const { data: tokenData } = useBalance({
     address: address,
@@ -37,7 +37,7 @@ const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount
 
   const handleMaxClick = () => {
     if (tokenData && tokenData.formatted) {
-      changeAmount(tokenData.formatted);
+      setMaxAmount(tokenData.formatted, inputName);
     }
   };
 
@@ -50,7 +50,7 @@ const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount
         <input
           ref={inputRef}
           type="number"
-          name={tokenAmount}
+          name= {inputName}
           value={tokenAmount}
           onChange={changeAmount}
           className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"

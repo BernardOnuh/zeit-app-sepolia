@@ -67,6 +67,12 @@ const Swap = () => {
         [name] : value
       })
   }
+  const setMaxAmount = (value, name) => {
+    setTokenAmount({
+        ...tokenAmount,
+        [name] : value
+      })
+  }
   const togglePopUp = (val) => {
     setModal(true);
     setOrder(val);
@@ -123,9 +129,6 @@ const Swap = () => {
     setModal(false);
   };
 
-  const handleSetMaxAmount = (maxAmount) => {
-    setTokenAmount(maxAmount);
-  };
 
 
 
@@ -271,10 +274,11 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
               </div>
               <Input 
                 inputRef={inputRef} 
+                setMaxAmount = {setMaxAmount}
+                inputName="firstTokenAmount"
                 tokenAmount={tokenAmount.firstTokenAmount}
                 tokenAddress={firstToken.addy}
                 changeAmount={changeAmount}
-                setMaxAmount={handleSetMaxAmount}
               />
               <div className="h-[28px] flex justify-between mb-[8px]">
                 <button className="l-trans-btn small-btn">25%</button>
@@ -331,10 +335,11 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
               </div>
               <Input 
                 inputRef={inputRef} 
+                setMaxAmount = {setMaxAmount}
+                inputName="secondTokenAmount"
                 tokenAmount={tokenAmount.secondTokenAmount}
                 changeAmount={changeAmount}
                 tokenAddress={secondToken.addy}
-                setMaxAmount={handleSetMaxAmount}
               />
             </div>
             <div className="my-[16px] font-Inter text-[14px] font-[500] text-[#202939] flex justify-between items-center">
