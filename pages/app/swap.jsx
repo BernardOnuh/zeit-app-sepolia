@@ -280,12 +280,6 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
                 tokenAddress={firstToken.addy}
                 changeAmount={changeAmount}
               />
-              <div className="h-[28px] flex justify-between mb-[8px]">
-                <button className="l-trans-btn small-btn">25%</button>
-                <button className="l-trans-btn small-btn">50%</button>
-                <button className="l-trans-btn small-btn">75%</button>
-                <button className="l-trans-btn small-btn">100%</button>
-              </div>
             </div>
             <div className="my-[16px] mx-auto w-fit">
               <button onClick={handleSwitch} className="">
@@ -436,12 +430,6 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
                 tokenAmount={tokenAmount.firstTokenAmount}
                 changeAmount={changeAmount}
               />
-              <div className="h-[28px] flex justify-between mb-[8px]">
-                <button className="l-trans-btn small-btn">25%</button>
-                <button className="l-trans-btn small-btn">50%</button>
-                <button className="l-trans-btn small-btn">75%</button>
-                <button className="l-trans-btn small-btn">100%</button>
-              </div>
             </div>
             <div className="my-[16px] mx-auto w-fit">
               <button onClick={handleSwitch} className="">

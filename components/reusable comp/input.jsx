@@ -35,32 +35,57 @@ const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount
     token: tokenAddress,
   });
 
-  const handleMaxClick = () => {
+  const handlePercentageClick = (value) => {
     if (tokenData && tokenData.formatted) {
-      setMaxAmount(tokenData.formatted, inputName);
+      switch(value) {
+        case 25:
+          setMaxAmount(tokenData.formatted*0.25, inputName);
+          break
+        case 50:
+          setMaxAmount(tokenData.formatted*0.5, inputName);
+          break
+        case 75:
+          setMaxAmount(tokenData.formatted*0.75, inputName);
+          break
+        default:
+        setMaxAmount(tokenData.formatted, inputName);
+      }
     }
   };
 
   return (
-    <div className="my-[8px] bg-[#F8FAFC] rounded-[8px] p-[8px] flex justify-between items-center">
-      <button onClick={handleMaxClick} className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
-        MAX
-      </button>
-      <div className="">
-        <input
-          ref={inputRef}
-          type="number"
-          name= {inputName}
-          value={tokenAmount}
-          onChange={changeAmount}
-          className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
-          placeholder="0.000"
-        />
-        <p className="text-[#9AA4B2] text-[14px] font-[400] font-Inter text-right">
-          <TokenComponent token={tokenAddress} />
-        </p>
+    <>
+      <div className="my-[8px] bg-[#F8FAFC] rounded-[8px] p-[8px] flex justify-between items-center">
+        <button onClick={handlePercentageClick} className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
+          MAX
+        </button>
+        <div className="">
+          <input
+            ref={inputRef}
+            type="number"
+            name= {inputName}
+            value={tokenAmount}
+            onChange={changeAmount}
+            className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
+            placeholder="0.000"
+          />
+          <p className="text-[#9AA4B2] text-[14px] font-[400] font-Inter text-right">
+            <TokenComponent token={tokenAddress} />
+          </p>
+        </div>
       </div>
-    </div>
+      {inputName == "firstTokenAmount" ? 
+        (
+          <div className="h-[28px] flex justify-between mb-[8px]">
+            <button onClick={() => handlePercentageClick(25)} className="l-trans-btn small-btn">25%</button>
+            <button onClick={() => handlePercentageClick(50)} className="l-trans-btn small-btn">50%</button>
+            <button onClick={() => handlePercentageClick(75)} className="l-trans-btn small-btn">75%</button>
+            <button onClick={handlePercentageClick} className="l-trans-btn small-btn">100%</button>
+          </div>
+        ):
+        null
+      }
+    </>
   );
 };
 
