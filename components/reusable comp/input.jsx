@@ -56,9 +56,13 @@ const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount
   return (
     <>
       <div className="my-[8px] bg-[#F8FAFC] rounded-[8px] p-[8px] flex justify-between items-center">
-        <button onClick={handlePercentageClick} className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
-          MAX
-        </button>
+        {inputName == "firstTokenAmount" ? 
+          (
+            <button onClick={handlePercentageClick} className="py-[2px] px-[8px] rounded-[8px] text-[#697586] text-[14px] font-[400] font-Inter">
+              MAX
+            </button>
+          ): <div></div>
+        }
         <div className="">
           <input
             ref={inputRef}
@@ -66,7 +70,7 @@ const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount
             name= {inputName}
             value={tokenAmount}
             onChange={changeAmount}
-            className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] w-[57px] bg-transparent outline-none font-[500]"
+            className="text-[#9AA4B2] h-[30px] font-Inter text-[20px] text-right min-w-[57px] bg-transparent outline-none font-[500]"
             placeholder="0.000"
           />
           <p className="text-[#9AA4B2] text-[14px] font-[400] font-Inter text-right">
