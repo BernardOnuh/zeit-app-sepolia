@@ -23,7 +23,7 @@ import {
   zerionWallet
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-// import {
+ import {
 //   mainnet,
 //   polygon,
 //   optimism,
@@ -31,9 +31,9 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 //   base,
 //   zora,
 //   goerli,
-//   sepolia,
-// } from "wagmi/chains";
-// import { alchemyProvider } from "wagmi/providers/alchemy";
+  sepolia,
+ } from "wagmi/chains";
+ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 const isServer = typeof window === "undefined";
 const WOW = !isServer ? require("wow.js") : null;
@@ -42,7 +42,7 @@ import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
 import { Web3Provider } from "@/context/connection";
 
-const arthera = {
+{/*const arthera = {
   id: 10243,
   name: 'Arthera Testnet',
   network: 'arthera',
@@ -69,11 +69,11 @@ const arthera = {
   },
   testnet: false,
 };
-
+*/}
 
 
 const { chains, publicClient } = configureChains(
-  [arthera],
+  [sepolia],
   [
     publicProvider(),
   ]
