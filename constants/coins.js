@@ -9,21 +9,37 @@ const SEPOLIACoins = [
     name: "Ether",
     abbr: "ETH",
     token: "", // Weth token is fetched from the router
+    icon: "",
+  },
+  {
+    name: "Bitcoin",
+    abbr: "BTC",
+    token: "0xB77a3B530c4B268873dc7F5E6270Ef115A655E7F",
+    icon: "",
+  },
+  {
+    name: "USDT",
+    abbr: "USDT",
+    token: "0xC067882ff7528E878fbC85f876a1D4e1964d0dBa",
+    icon: "",
   },
   {
     name: "WETH",
     abbr: "WETH",
-    token: "0x0224AB042Ca74a7b1696c44a9534a5A9D7Bbba15",
+    token: "0xb5D8F883a4f330935a6Bd7d0857af126d48c9C32",
+    icon: "",
   },
   {
     name: "TEST",
     abbr: "TEST",
     token: "0x7c5A3696966952535337E2Bce9A55e35B98c2105",
+    icon: "",
   },
   {
     name: "NEXT",
     abbr: "NEXT",
     token: "0x1Bc365E5489747a31954799206E2Aa00048e7De8",
+    icon: "",
   },
 ]
 
@@ -37,7 +53,7 @@ const ARTHERACoins = [
   {
     name: "Wrapped Ethereum",
     abbr: "WETH",
-    token: "0x6434F66B998aF521bB7901746AaA9D319D1af013",
+    token: "0xb5D8F883a4f330935a6Bd7d0857af126d48c9C32",
     icon: "",
   },
   {
@@ -55,13 +71,13 @@ const ARTHERACoins = [
   {
     name: "USDT",
     abbr: "USDT",
-    token: "0x222",
+    token: "0xC067882ff7528E878fbC85f876a1D4e1964d0dBa",
     icon: "",
   },
   {
     name: "Bitcoin",
     abbr: "BTC",
-    token: "0x000",
+    token: "0xB77a3B530c4B268873dc7F5E6270Ef115A655E7F",
     icon: "",
   },
 ]
