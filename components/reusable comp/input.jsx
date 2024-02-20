@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useAccount, useBalance } from 'wagmi';
 
 function TokenComponent({ token }) {
@@ -28,12 +28,18 @@ function TokenComponent({ token }) {
 }
 
 
-const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount, inputName }) => {
+const Input = ({ inputRef, tokenAddress,tokenBalance, tokenAmount, changeAmount, setMaxAmount,setBalance, inputName }) => {
   const { address } = useAccount();
   const { data: tokenData } = useBalance({
     address: address,
     token: tokenAddress,
   });
+
+  useEffect((value) => {
+    if (tokenData && tokenData.formatted) {
+      setBalance(tokenData.formatted, inputName); // Assuming inputName is the name you want to use
+    }
+  }, [tokenData]); 
 
   const handlePercentageClick = (value) => {
     if (tokenData && tokenData.formatted) {

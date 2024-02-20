@@ -9,7 +9,8 @@ import setupConnection from "@/context/connection"
 import { 
   getBalanceAndSymbol, 
   getProvider, 
-  getSigner, } from "@/utils/ethereumFunctions";
+  getSigner,getReserves } from "@/utils/ethereumFunctions";
+import { addLiquidity, quoteAddLiquidity } from "@/utils/liquidityFunctions";
 import Input from "@/components/reusable comp/input";
 import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
@@ -34,6 +35,11 @@ const Swap = () => {
     secondTokenAmount: "0.0",
   });
   
+  const [tokenBalance, setTokenBalance] = useState({
+    firstTokenAmount: "0.0",
+    secondTokenAmount: "0.0",
+  });
+
   const inputRef = useRef()
   const removeModal = () => {
     setModal(false);
@@ -73,6 +79,13 @@ const Swap = () => {
         [name] : value
       })
   }
+  const setBalance = (value, name) => {
+    setTokenBalance({
+        ...tokenBalance,
+        [name] : value
+    });
+};
+
   const togglePopUp = (val) => {
     setModal(true);
     setOrder(val);
@@ -130,6 +143,22 @@ const Swap = () => {
   };
 
 
+  const isButtonEnabled = () => {
+
+    // If both coins have been selected, and a valid float has been entered for both, which are less than the user's balances, then return true
+    const parsedInput1 = tokenAmount.firstTokenAmount ;
+    const parsedInput2 = tokenAmount.secondTokenAmount;
+    return (
+      firstToken.addy &&
+      secondToken.addy &&
+      parsedInput1 !== NaN &&
+      0 < parsedInput1 &&
+      parsedInput2 !== NaN &&
+      0 < parsedInput2 &&
+      parsedInput1 <= tokenBalance.firstTokenAmount &&
+      parsedInput2 <= tokenBalance.secondTokenAmount
+    );
+  };
 
 
 console.log(network)
@@ -276,7 +305,9 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
                 inputRef={inputRef} 
                 setMaxAmount = {setMaxAmount}
                 inputName="firstTokenAmount"
+                setBalance={setBalance}
                 tokenAmount={tokenAmount.firstTokenAmount}
+                tokenBalance={tokenAmount.firstTokenAmount}
                 tokenAddress={firstToken.addy}
                 changeAmount={changeAmount}
               />
@@ -330,8 +361,10 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
               <Input 
                 inputRef={inputRef} 
                 setMaxAmount = {setMaxAmount}
+                setBalance={setBalance}
                 inputName="secondTokenAmount"
                 tokenAmount={tokenAmount.secondTokenAmount}
+                tokenBalance={tokenAmount.secondTokenAmount}
                 changeAmount={changeAmount}
                 tokenAddress={secondToken.addy}
               />
@@ -488,6 +521,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
               <span className="">5%</span>
             </div>
             <section className="">
+              {tokenBalance.firstTokenAmount}
               {connectedState ? (
                 <Button>
                   Swap
