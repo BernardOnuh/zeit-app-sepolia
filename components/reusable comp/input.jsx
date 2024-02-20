@@ -28,16 +28,21 @@ function TokenComponent({ token }) {
 }
 
 
-const Input = ({ inputRef, tokenAddress,tokenBalance, tokenAmount, changeAmount, setMaxAmount,setBalance, inputName }) => {
+const Input = ({ inputRef, tokenAddress, setBalance, tokenAmount, changeAmount, setMaxAmount, inputName }) => {
   const { address } = useAccount();
   const { data: tokenData } = useBalance({
     address: address,
     token: tokenAddress,
   });
 
-  useEffect((value) => {
+  useEffect(() => {
     if (tokenData && tokenData.formatted) {
-      setBalance(tokenData.formatted, inputName); // Assuming inputName is the name you want to use
+      if (inputName == "firstTokenAmount") {
+        setBalance("firstTokenBalance", tokenData.formatted)
+      }
+      else {
+        setBalance("secondTokenBalance", tokenData.formatted)
+      }
     }
   }, [tokenData]); 
 
