@@ -28,23 +28,12 @@ function TokenComponent({ token }) {
 }
 
 
-const Input = ({ inputRef, tokenAddress, setBalance, tokenAmount, changeAmount, setMaxAmount, inputName }) => {
+const Input = ({ inputRef, tokenAddress, tokenAmount, changeAmount, setMaxAmount, inputName }) => {
   const { address } = useAccount();
   const { data: tokenData } = useBalance({
     address: address,
     token: tokenAddress,
-  });
-
-  useEffect(() => {
-    if (tokenData && tokenData.formatted) {
-      if (inputName == "firstTokenAmount") {
-        setBalance("firstTokenBalance", tokenData.formatted)
-      }
-      else {
-        setBalance("secondTokenBalance", tokenData.formatted)
-      }
-    }
-  }, [tokenData]); 
+  }); 
 
   const handlePercentageClick = (value) => {
     if (tokenData && tokenData.formatted) {

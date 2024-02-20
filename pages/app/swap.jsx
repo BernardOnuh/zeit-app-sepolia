@@ -34,10 +34,6 @@ const Swap = () => {
     firstTokenAmount: "0.0",
     secondTokenAmount: "0.0",
   });
-  const [tokenBalance, setTokenBalance] = useState({
-    firstTokenBalance: null,
-    secondTokenBalance: null,
-  });
   
 
   const inputRef = useRef()
@@ -45,12 +41,6 @@ const Swap = () => {
     setModal(false);
   };
 
-  const setBalance = (name, value) => {
-    setTokenBalance({
-      ...tokenBalance,
-      [name] : value
-    })
-  }
 
   useEffect(() => {
     setIsOnApp(true);
@@ -135,22 +125,29 @@ const Swap = () => {
   };
 
 
-  // const isButtonEnabled = () => {
-
-  //   // If both coins have been selected, and a valid float has been entered for both, which are less than the user's balances, then return true
-  //   const parsedInput1 = tokenAmount.firstTokenAmount ;
-  //   const parsedInput2 = tokenAmount.secondTokenAmount;
-  //   return (
-  //     firstToken.addy &&
-  //     secondToken.addy &&
-  //     parsedInput1 !== NaN &&
-  //     0 < parsedInput1 &&
-  //     parsedInput2 !== NaN &&
-  //     0 < parsedInput2 &&
-  //     parsedInput1 <= tokenBalance.firstTokenAmount &&
-  //     parsedInput2 <= tokenBalance.secondTokenAmount
-  //   );
-  // };
+  const isButtonEnabled = () => {
+    const { data: tokenBalOne } = useBalance({
+      address: address,
+      token: firstToken.addy,
+    }); 
+    const { data: tokenBalTwo } = useBalance({
+      address: address,
+      token: secondToken.addy,
+    }); 
+    // If both coins have been selected, and a valid float has been entered for both, which are less than the user's balances, then return true
+    const parsedInput1 = tokenAmount.firstTokenAmount ;
+    const parsedInput2 = tokenAmount.secondTokenAmount;
+    return (
+      firstToken.addy &&
+      secondToken.addy &&
+      parsedInput1 !== NaN &&
+      0 < parsedInput1 &&
+      parsedInput2 !== NaN &&
+      0 < parsedInput2 &&
+      parsedInput1 <= tokenBalOne.formatted.firstTokenAmount &&
+      parsedInput2 <= tokenBalTwo.secondTokenAmount
+    );
+  };
 
 
 console.log(network)
@@ -297,7 +294,6 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
                 inputRef={inputRef} 
                 setMaxAmount = {setMaxAmount}
                 inputName="firstTokenAmount"
-                setBalance = {setBalance}
                 tokenAmount={tokenAmount.firstTokenAmount}
                 tokenAddress={firstToken.addy}
                 changeAmount={changeAmount}
@@ -353,7 +349,6 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
                 inputRef={inputRef} 
                 setMaxAmount = {setMaxAmount}
                 inputName="secondTokenAmount"
-                setBalance = {setBalance}
                 tokenAmount={tokenAmount.secondTokenAmount}
                 changeAmount={changeAmount}
                 tokenAddress={secondToken.addy}
