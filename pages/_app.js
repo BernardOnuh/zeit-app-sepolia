@@ -40,7 +40,7 @@ const WOW = !isServer ? require("wow.js") : null;
 import Layout from "@/layout/Layout";
 import "@/styles/globals.css";
 import { DataGet } from "@/context/DataContext";
-import { Web3Provider } from "@/context/connection";
+
 
 {/*const arthera = {
   id: 10243,
@@ -121,11 +121,11 @@ export default function App({
               accentColorForeground: "white",
             })}
           >
-            <Web3Provider>
+          
               <Layout>
                 <Component {...pageProps}/>
               </Layout>
-            </Web3Provider>
+            
           </RainbowKitProvider>
         </WagmiConfig>
       </DataGet>

@@ -14,12 +14,11 @@ import Button from "../page/Button";
 import Input from "@/components/reusable comp/input";
 import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
-import { useBalance } from 'wagmi'
-import { useNetwork } from "@/context/connection";
+import { useBalance,useContractRead, useContractWrite,erc20ABI } from 'wagmi'
+
 
 const Swap = () => {
   const [numOne, numTwo] = COINS
-  const {network} = useNetwork()
   const { mode, setIsOnApp } = useData();
   const { isConnected, address } = useAccount();
   const [connectedState, setConnectedState] = useState(false)
@@ -34,6 +33,7 @@ const Swap = () => {
     firstTokenAmount: "0.0",
     secondTokenAmount: "0.0",
   });
+  const router ="0x9e7429bDf634b9265f04F0E03149891bc957eD99";
   
 
   const inputRef = useRef()
@@ -42,10 +42,6 @@ const Swap = () => {
   };
 
 
-  useEffect(() => {
-    setIsOnApp(true);
-    console.log(network)
-  }, []);
   useEffect(() => {
     if (isConnected === true) {
       setConnectedState(true)
@@ -125,6 +121,46 @@ const Swap = () => {
   };
 
 
+
+
+  const Approve = async (
+    tokenAddress,
+    routerContract,
+    SpendAmount,
+  ) => {
+    try {
+      const decimal = useContractRead({
+        abi:erc20ABI,
+        address: tokenAddress,
+        functionName: 'decimals',
+      })
+
+      const amountIn = ethers.utils.parseUnits(SpendAmount, decimal.data);
+      const result =  useContractWrite({
+        abi:erc20ABI,
+        address:tokenAddress,
+        functionName: 'approve',
+        args: [
+          routerContract,
+          amountIn
+        ],
+      });
+      console.log('Transfer result:', result);
+    } catch (error) {
+      console.error('Error while transferring:', error);
+    }
+  }
+  const handleApprove = async () => {
+    try {
+      // Call the Approve function
+      await Approve(firstToken.addy, router, tokenAmount.firstTokenAmount);
+      await Approve(secondToken.addy, router, tokenAmount.secondTokenAmount);
+      console.log('Approval successful!');
+    } catch (error) {
+      console.error('Error while approving:', error);
+    }
+  };
+
   const isButtonEnabled = () => {
     const { data: tokenBalOne } = useBalance({
       address: address,
@@ -150,7 +186,6 @@ const Swap = () => {
   };
 
 
-console.log(network)
 
 const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
   // Ensure that `token` is defined before rendering the button
@@ -360,7 +395,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
             </div>
             <section className="">
               {connectedState ? (
-                <Button>
+                <Button onClickHandler={handleApprove}>
                   Swap
                 </Button>
               ) : (
