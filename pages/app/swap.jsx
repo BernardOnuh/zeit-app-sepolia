@@ -5,6 +5,7 @@ import TradingViewWidget from "@/components/TradingViewWidget";
 import Image from "next/image";
 import HeadComp from "@/layout/HeadComp";
 import Button from "../page/Button";
+import { ethers } from "ethers";
 // import setupConnection from "@/context/connection"
 // import { 
 //   getBalanceAndSymbol, 
@@ -15,6 +16,8 @@ import Input from "@/components/reusable comp/input";
 import COINS from "@/constants/coins";
 import TokenImg from "@/components/widgets/token-image";
 import { useBalance,useContractRead, useContractWrite,erc20ABI } from 'wagmi'
+import {RouterAbi} from "./router"
+import { parseEther } from "viem";
 
 
 const Swap = () => {
@@ -34,7 +37,7 @@ const Swap = () => {
     secondTokenAmount: "0.0",
   });
   const router ="0x9e7429bDf634b9265f04F0E03149891bc957eD99";
-  
+
 
   const inputRef = useRef()
   const removeModal = () => {
@@ -120,9 +123,64 @@ const Swap = () => {
     setModal(false);
   };
 
+  const { data, isLoading, isSuccess, write: approveFirstToken } = useContractWrite({
+    abi: erc20ABI,
+    address: firstToken.addy,
+    functionName: 'approve',
+    args: [
+      router,
+      ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString())
+    ],
+  });
+  
+  const { data: secondTokenData, isLoading: secondTokenLoad, isSuccess: secondTokenSuccess, write: approveSecondToken } = useContractWrite({
+    abi: erc20ABI,
+    address: secondToken.addy,
+    functionName: 'approve',
+    args: [
+      router,
+      ethers.utils.parseEther(tokenAmount.secondTokenAmount.toString())
+    ],
+  });
+  const time = Math.floor(Date.now() / 1000) + 200000;
+  const deadline = ethers.BigNumber.from(time)
+  const { data:liquidityData, isLoading:liquidityLoading, isSuccess:liquiditySuccess, write: addliquidity } = useContractWrite({
+    abi:RouterAbi,
+    address: router,
+    functionName: 'addLiquidity',
+    args: [
+      firstToken.addy,
+      secondToken.addy,
+      ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+      ethers.utils.parseEther(tokenAmount.secondTokenAmount.toString()),
+      "0",
+      "0",
+      address,
+      deadline
+    ],
+  });
 
+  
+  const handleApproveTokens = async () => {
+    try {
+      // Call the Approve function
+      await approveFirstToken();
+      console.log('First token approved successfully!');
+      
+      await approveSecondToken();
+      console.log('Second token approved successfully!');
+      
+      await addliquidity();
+      console.log('Liquidity added successfully!');
+      
+      console.log('All approvals and liquidity addition successful!');
+    } catch (error) {
+      console.error('Error while approving or adding liquidity:', error);
+    }
+};
 
-
+  
+{/*
   const Approve = async (
     tokenAddress,
     routerContract,
@@ -130,15 +188,15 @@ const Swap = () => {
   ) => {
     try {
       const decimal = useContractRead({
-        abi:erc20ABI,
+        abi: erc20ABI,
         address: tokenAddress,
         functionName: 'decimals',
-      })
+      });
 
       const amountIn = ethers.utils.parseUnits(SpendAmount, decimal.data);
-      const result =  useContractWrite({
-        abi:erc20ABI,
-        address:tokenAddress,
+      const { data, isLoading, isSuccess, write } = useContractWrite({
+        abi: erc20ABI,
+        address: tokenAddress,
         functionName: 'approve',
         args: [
           routerContract,
@@ -149,17 +207,12 @@ const Swap = () => {
     } catch (error) {
       console.error('Error while transferring:', error);
     }
-  }
-  const handleApprove = async () => {
-    try {
-      // Call the Approve function
-      await Approve(firstToken.addy, router, tokenAmount.firstTokenAmount);
-      await Approve(secondToken.addy, router, tokenAmount.secondTokenAmount);
-      console.log('Approval successful!');
-    } catch (error) {
-      console.error('Error while approving:', error);
-    }
   };
+*/}
+
+//CHECK HERE
+
+
 
   const isButtonEnabled = () => {
     const { data: tokenBalOne } = useBalance({
@@ -395,7 +448,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
             </div>
             <section className="">
               {connectedState ? (
-                <Button onClickHandler={handleApprove}>
+                <Button onClickHandler={handleApproveTokens}>
                   Swap
                 </Button>
               ) : (
