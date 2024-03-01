@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useData } from "@/context/DataContext";
 import { useAccount } from "wagmi";
 import TradingViewWidget from "@/components/TradingViewWidget";
@@ -37,6 +38,7 @@ const Swap = () => {
     secondTokenAmount: "0.0",
   });
   const router ="0x9e7429bDf634b9265f04F0E03149891bc957eD99";
+  const WETH ="0xb5D8F883a4f330935a6Bd7d0857af126d48c9C32";
 
 
   const inputRef = useRef()
@@ -167,9 +169,11 @@ const Swap = () => {
       await approveFirstToken();
       console.log('First token approved successfully!');
       
+      //await approveSecondToken();
+      //console.log('Second token approved successfully!');
       await approveSecondToken();
-      console.log('Second token approved successfully!');
-      
+      console.log('First token approved successfully!');
+
       await addliquidity();
       console.log('Liquidity added successfully!');
       
@@ -177,6 +181,52 @@ const Swap = () => {
     } catch (error) {
       console.error('Error while approving or adding liquidity:', error);
     }
+};
+
+const { data:liquidityDataEth, isLoading:liquidityLoadingEth, isSuccess:liquiditySuccessEth, write: addLiquidityEth } = useContractWrite({
+  abi:RouterAbi,
+  address: router,
+  functionName: 'addLiquidityETH',
+  //account:address,
+  value: ethers.utils.parseEther(tokenAmount.secondTokenAmount.toString()),
+  args: [
+    firstToken.addy,
+    ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+    "0",
+    "0",
+    address,
+    deadline
+  ],
+});
+
+const { data: thirdTokenData, isLoading: thirdTokenLoad, isSuccess: thirdTokenSuccess, write: approveThirdToken } = useContractWrite({
+  abi: erc20ABI,
+  address: WETH,
+  functionName: 'approve',
+  args: [
+    router,
+    ethers.utils.parseEther(tokenAmount.secondTokenAmount.toString())
+  ],
+});
+
+const handleApproveTokensETH = async () => {
+  try {
+    // Call the Approve function
+    await approveFirstToken();
+    console.log('First token approved successfully!');
+    
+    //await approveSecondToken();
+    await approveThirdToken();
+    console.log('First token approved successfully!');
+    //console.log('Second token approved successfully!');
+    
+    await addLiquidityEth();
+    console.log('Liquidity added successfully!');
+    
+    console.log('All approvals and liquidity addition successful!');
+  } catch (error) {
+    console.error('Error while approving or adding liquidity:', error);
+  }
 };
 
   
@@ -316,6 +366,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
             <h1 className="text-[#364152] text-[24px] font-Inter font-[600]">
               Swap
             </h1>
+            <ConnectButton />
             <p className="font-Inter text-[16px] text-[#364152] mb-[16px] font-[400]">
               Instantly Trade Tokens
             </p>
@@ -448,7 +499,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
             </div>
             <section className="">
               {connectedState ? (
-                <Button onClickHandler={handleApproveTokens}>
+                <Button onClickHandler={handleApproveTokensETH}>
                   Swap
                 </Button>
               ) : (
