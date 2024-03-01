@@ -125,6 +125,7 @@ const Swap = () => {
     setModal(false);
   };
 
+//// Add-Liquidity ///////
   const { data, isLoading, isSuccess, write: approveFirstToken } = useContractWrite({
     abi: erc20ABI,
     address: firstToken.addy,
@@ -161,6 +162,18 @@ const Swap = () => {
       deadline
     ],
   });
+  const { data:SwapTokenData, isLoading:SwapTokenLoading, isSuccess:SwapTokenSuccess, write: SwapToken } = useContractWrite({
+    abi: RouterAbi,
+    address: router,
+    functionName: 'swapExactTokensForTokens',
+    args: [
+      ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+      "0",
+      [firstToken.addy, secondToken.addy],
+      address,
+      deadline
+    ],
+  });
 
   
   const handleApproveTokens = async () => {
@@ -183,6 +196,10 @@ const Swap = () => {
     }
 };
 
+/////////////////
+
+
+////// AddLiquidityETH //////
 const { data:liquidityDataEth, isLoading:liquidityLoadingEth, isSuccess:liquiditySuccessEth, write: addLiquidityEth } = useContractWrite({
   abi:RouterAbi,
   address: router,
@@ -209,6 +226,19 @@ const { data: thirdTokenData, isLoading: thirdTokenLoad, isSuccess: thirdTokenSu
   ],
 });
 
+const { data:swapExactTokensForTokensData, isLoading:swapExactTokensForTokensLoading, isSuccess:swapExactTokensForTokensSuccess, write: swapExactTokens } = useContractWrite({
+  abi:RouterAbi,
+  address: router,
+  functionName:'swapExactTokensForTokens',
+  args: [
+    ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+    "0",
+    [firstToken.addy, secondToken.addy],
+    address,
+    deadline
+  ],
+});
+
 const handleApproveTokensETH = async () => {
   try {
     // Call the Approve function
@@ -228,8 +258,57 @@ const handleApproveTokensETH = async () => {
     console.error('Error while approving or adding liquidity:', error);
   }
 };
+//////////////////
+
 
   
+const { data: quote } = useContractRead({
+  abi: RouterAbi,
+  address: router,
+  functionName: 'getAmountsOut',
+  args: [
+    ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+    [firstToken.addy, secondToken.addy],
+  ],
+});
+
+// Update secondTokenAmount when quote becomes available
+useEffect(() => {
+  if (quote && quote.length > 1) {
+    const formattedQuote = ethers.utils.formatEther(quote[1]);
+    setTokenAmount(prevTokenAmount => ({
+      ...prevTokenAmount,
+      secondTokenAmount: formattedQuote,
+    }));
+  } else {
+    // If quote is not returned, set secondTokenAmount to '0.0'
+    setTokenAmount(prevTokenAmount => ({
+      ...prevTokenAmount,
+      secondTokenAmount: '0.0',
+    }));
+  }
+}, [quote]);
+
+
+//////// HANDLE SWAP BETWEEN TWO TOKENS /////
+
+
+const SwapBetweenTokens = async () => {
+  try {
+    // Call the Approve function
+    await approveFirstToken();
+    console.log('First token approved successfully!');
+    
+    
+    await swapExactTokens();
+    console.log('Liquidity added successfully!');
+    
+    console.log('All approvals and liquidity addition successful!');
+  } catch (error) {
+    console.error('Error while approving or adding liquidity:', error);
+  }
+};
+
 {/*
   const Approve = async (
     tokenAddress,
@@ -499,7 +578,7 @@ const getCoinList = numOne[1].map(({ name, abbr, token, icon }) => {
             </div>
             <section className="">
               {connectedState ? (
-                <Button onClickHandler={handleApproveTokensETH}>
+                <Button onClickHandler={handleApproveTokens}>
                   Swap
                 </Button>
               ) : (
