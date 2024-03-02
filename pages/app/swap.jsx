@@ -162,19 +162,7 @@ const Swap = () => {
       deadline
     ],
   });
-  const { data:SwapTokenData, isLoading:SwapTokenLoading, isSuccess:SwapTokenSuccess, write: SwapToken } = useContractWrite({
-    abi: RouterAbi,
-    address: router,
-    functionName: 'swapExactTokensForTokens',
-    args: [
-      ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
-      "0",
-      [firstToken.addy, secondToken.addy],
-      address,
-      deadline
-    ],
-  });
-
+  
   
   const handleApproveTokens = async () => {
     try {
@@ -291,6 +279,18 @@ useEffect(() => {
 
 
 //////// HANDLE SWAP BETWEEN TWO TOKENS /////
+const { data:SwapTokenData, isLoading:SwapTokenLoading, isSuccess:SwapTokenSuccess, write: SwapToken } = useContractWrite({
+    abi: RouterAbi,
+    address: router,
+    functionName: 'swapExactTokensForTokens',
+    args: [
+      ethers.utils.parseEther(tokenAmount.firstTokenAmount.toString()),
+      "0",
+      [firstToken.addy, secondToken.addy],
+      address,
+      deadline
+    ],
+  });
 
 
 const SwapBetweenTokens = async () => {
@@ -300,7 +300,7 @@ const SwapBetweenTokens = async () => {
     console.log('First token approved successfully!');
     
     
-    await swapExactTokens();
+    await SwapToken();
     console.log('Liquidity added successfully!');
     
     console.log('All approvals and liquidity addition successful!');
